@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {Home} from '../../../screens';
+import {Home, NewClass, Notifications, Profile} from '../../../screens';
 import {CustomTabBar} from './CustomTabBar';
 import {MainTabParamList} from '../../../types/app/route/PostAuthRoutes';
 
@@ -14,6 +14,9 @@ export const MainTab = () => {
       }}
       tabBar={props => <CustomTabBar {...props} />}>
       <Screen name="Home" component={Home} />
+      <Screen name="Notifications" component={Notifications} />
+      <Screen name="NewClass" component={NewClass} />
+      <Screen name="Profile" component={Profile} />
     </Navigator>
   );
 };

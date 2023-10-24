@@ -38,8 +38,8 @@ export const CustomTabBar = ({state, navigation}: BottomTabBarProps) => {
       <Container>
         <TabItem
           screenName="Home"
-          iconInactive={<HistoryIcon source={assets.home.homeEnabled} />}
-          iconActive={<HistoryIcon source={assets.home.homeDisabled} />}
+          iconInactive={<HistoryIcon source={assets.home.homeDisabled} />}
+          iconActive={<HistoryIcon source={assets.home.homeEnabled} />}
           state={state}
           navigation={navigation}
         />

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {ReactNode} from 'react';
 import {Container} from './styles';
 import {
@@ -32,10 +32,6 @@ export const TabItem = ({
   }, [screenName, state]);
 
   const isFocused = itemIndex === state.index;
-
-  useEffect(() => {
-    console.log('OPAA', state.routes, itemIndex);
-  }, []);
 
   const onPress = () => {
     if (!itemRouteData) {
