@@ -2,28 +2,28 @@ import {
   NavigationContainer,
   NavigationContainerRef,
   useNavigationContainerRef,
+  DefaultTheme,
 } from '@react-navigation/native';
 import React, {useRef} from 'react';
 import {MainRouter} from './MainRouter';
-// import {useTheme} from 'styled-components';
+import {useTheme} from 'styled-components';
 
 export const RouterContainer = () => {
   const navigationRef =
     useNavigationContainerRef<NavigationContainerRef<object>>();
   const routeNameRef = useRef<string | null>(null);
 
-  // const appTheme = useTheme();
+  const appTheme = useTheme();
 
   return (
     <NavigationContainer
-      //   theme={{
-      //     // ...DefaultTheme,
-      //     colors: {
-      //     //   ...DefaultTheme.colors,
-      //       background: appTheme.palette.background,
-      //     },
-      //   }}
-      //   linking={linking}
+      theme={{
+        ...DefaultTheme,
+        colors: {
+          ...DefaultTheme.colors,
+          background: appTheme.palette.background,
+        },
+      }}
       ref={navigationRef}
       onReady={() => {
         routeNameRef.current = navigationRef.getCurrentRoute()?.name ?? null;
@@ -37,7 +37,6 @@ export const RouterContainer = () => {
           previousRouteName !== currentRouteName
         ) {
           routeNameRef.current = currentRouteName;
-          //   analytics().logScreenView({screen_name: currentRouteName});
         }
       }}>
       <MainRouter />
