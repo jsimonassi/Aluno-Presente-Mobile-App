@@ -10,7 +10,7 @@ export const LightTheme: DefaultTheme = {
     surface2: '#CACCCE80',
     surface3: '#282828',
 
-    greyTextLabel: '#A3A3A3',
+    greyTextLabel: '#86888A',
     fontIconColor: '#F6F6F6',
     fontIconBackgroundColor: '#F6F6F6',
 

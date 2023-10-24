@@ -2,7 +2,12 @@ import React from 'react';
 import {TextProps} from 'react-native';
 import {SecondaryTextStyled, TextStyled} from './styles';
 
-export const MainText = (props: TextProps) => {
+interface MainTextProps extends TextProps {
+  children: React.ReactNode;
+  title?: boolean;
+}
+
+export const MainText = (props: MainTextProps) => {
   return <TextStyled {...props}>{props.children}</TextStyled>;
 };
 
