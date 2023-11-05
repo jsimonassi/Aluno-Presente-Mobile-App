@@ -14,7 +14,7 @@ export const PressableContainer = styled(Pressable)<ButtonProps>`
       ? theme.palette.primaryColor
       : theme.palette.fontIconBackgroundColor};
   border-radius: 32px;
-  height: 56px;
+  height: 50px;
   width: 100%;
 `;
 

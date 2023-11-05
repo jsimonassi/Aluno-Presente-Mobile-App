@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MainTab} from './MainTab';
-import {PostAuthRoutesParamList} from '../../types/app/route/PostAuthRoutes';
+import {PostAuthRoutesParamList} from '../../types/app/route';
 
 const {Navigator, Screen} = createStackNavigator<PostAuthRoutesParamList>();
 

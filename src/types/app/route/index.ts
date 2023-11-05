@@ -13,3 +13,8 @@ export type MainTabParamList = {
 };
 
 export type HomeStackParamList = {};
+
+export type PreAuthRoutesParamList = {
+  Login: undefined;
+  LoginWebView: undefined;
+};

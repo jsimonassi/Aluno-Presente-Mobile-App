@@ -1,8 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Login} from '../../screens';
+import {Login, LoginWebView} from '../../screens';
+import {PreAuthRoutesParamList} from '../../types/app/route';
 
-const {Navigator, Screen} = createStackNavigator();
+const {Navigator, Screen} = createStackNavigator<PreAuthRoutesParamList>();
 
 export const PreAuthRoutes = () => {
   return (
@@ -13,6 +14,7 @@ export const PreAuthRoutes = () => {
         animationEnabled: true,
       }}>
       <Screen name="Login" component={Login} />
+      <Screen name="LoginWebView" component={LoginWebView} />
     </Navigator>
   );
 };

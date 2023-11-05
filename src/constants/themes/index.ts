@@ -14,8 +14,8 @@ export const LightTheme: DefaultTheme = {
     fontIconColor: '#F6F6F6',
     fontIconBackgroundColor: '#F6F6F6',
 
-    gradientBgStart: '#263C52',
-    gradientBgEnd: '#1F2832',
+    gradientBgStart: '#385775',
+    gradientBgEnd: '#19222B',
 
     modalBackdrop: '#0000007D',
   },

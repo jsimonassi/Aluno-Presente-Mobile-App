@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {Home, NewClass, Notifications, Profile} from '../../../screens';
 import {CustomTabBar} from './CustomTabBar';
-import {MainTabParamList} from '../../../types/app/route/PostAuthRoutes';
+import {MainTabParamList} from '../../../types/app/route';
 
 const {Navigator, Screen} = createBottomTabNavigator<MainTabParamList>();
 
