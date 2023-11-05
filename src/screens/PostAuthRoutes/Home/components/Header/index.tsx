@@ -4,9 +4,9 @@ import {
   InfoGroupStyled,
   ProfileImageStyled,
 } from './styles';
-import {assets} from '../../../../assets';
-import {User} from '../../../../types/api/User';
-import {SecondaryText} from '../../../../components/Text';
+import {assets} from '../../../../../assets';
+import {User} from '../../../../../types/api/User';
+import {SecondaryText} from '../../../../../components/Text';
 
 interface OwnProps {
   currentUser: User;

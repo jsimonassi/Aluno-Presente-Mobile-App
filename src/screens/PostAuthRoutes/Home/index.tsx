@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Header} from './components';
-import {User} from '../../types/api/User';
+import {User} from '../../../types/api/User';
 import EmptyClassList from './components/EmptyClassList';
 
 export const Home = () => {

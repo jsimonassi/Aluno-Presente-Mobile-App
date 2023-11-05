@@ -1,7 +1,7 @@
 import React from 'react';
 import {EmptyClassListContainerStyled, LogoImageStyled} from './styles';
-import {MainText} from '../../../../components/Text';
-import {assets} from '../../../../assets';
+import {MainText} from '../../../../../components/Text';
+import {assets} from '../../../../../assets';
 
 const EmptyClassList = () => {
   return (
