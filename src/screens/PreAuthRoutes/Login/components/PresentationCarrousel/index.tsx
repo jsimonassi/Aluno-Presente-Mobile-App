@@ -34,7 +34,7 @@ export const PresentationCarrousel = () => {
     <Carousel
       style={{
         width: width,
-        height: 200,
+        height: 300,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

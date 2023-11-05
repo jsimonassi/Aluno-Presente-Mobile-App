@@ -29,9 +29,10 @@ export const Login = () => {
           <MainText
             style={{
               color: appTheme.palette.fontIconBackgroundColor,
-              fontSize: 18,
+              fontSize: 20,
               textAlign: 'center',
               marginHorizontal: 50,
+              fontFamily: 'Nunito-ExtraLight',
             }}>
             {Constants.MESSAGES.LOGIN_MESSAGES.PRESENTATION}
           </MainText>
