@@ -13,6 +13,7 @@ export const LightTheme: DefaultTheme = {
     greyTextLabel: '#86888A',
     fontIconColor: '#F6F6F6',
     fontIconBackgroundColor: '#F6F6F6',
+    pageBackgroundColor: '#F6F6F6',
 
     gradientBgStart: '#385775',
     gradientBgEnd: '#19222B',

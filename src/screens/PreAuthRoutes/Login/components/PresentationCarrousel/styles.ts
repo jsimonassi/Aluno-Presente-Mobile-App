@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
 
 export const ImageStyled = styled.Image`
-  height: 200;
+  height: 200px;
 `;
