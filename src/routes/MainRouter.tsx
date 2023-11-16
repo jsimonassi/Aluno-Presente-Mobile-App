@@ -1,14 +1,12 @@
 import React from 'react';
 import {PostAuthRoutes} from './PostAuthRoutes';
 import {PreAuthRoutes} from './PreAuthRoutes';
+import {useSessionContext} from '../contexts/Session';
 
 export const MainRouter = () => {
-  // const userStore = useUserContext();
+  const {currentSession} = useSessionContext();
 
-  // if (userStore.data.loadingUserAndLegalData)
-  // 	return <Loader visible />;
-
-  if (true) {
+  if (!currentSession) {
     return <PreAuthRoutes />;
   }
 

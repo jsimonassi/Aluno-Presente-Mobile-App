@@ -1,6 +1,6 @@
-import {DefaultTheme} from 'styled-components/native';
+import {AppTheme} from '../../types/styledComponents/AppTheme';
 
-export const LightTheme: DefaultTheme = {
+export const LightTheme: AppTheme = {
   palette: {
     primaryColor: '#2F4153',
     secondaryColor: '#D25454',
