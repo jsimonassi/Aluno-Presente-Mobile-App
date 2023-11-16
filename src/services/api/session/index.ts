@@ -14,6 +14,7 @@ export const Session = {
       };
       axios(options)
         .then(response => {
+          console.log(response.data);
           resolve({
             accessToken: response.data.access_token,
             expiresIn: response.data.expires_in,

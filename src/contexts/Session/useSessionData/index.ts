@@ -1,11 +1,13 @@
 import {useState} from 'react';
 import {AUTH_SERVER_BASE_URL, AUTH_CLIENT_ID} from '@env';
-import {Api} from '../../../services';
+import {Api, Storage} from '../../../services';
 import {TokenRequestConfig, TokenSession} from '../../../types/api/Session';
+
+const CACHE_SESSION_KEY = 'session_cache_key';
 
 export const useSessionData = () => {
   const [currentSession, setCurrentSession] = useState<TokenSession | null>(
-    null,
+    {} as TokenSession,
   );
 
   const generateLoginUrl = (redirectUrl: string, codeChallenge: string) => {
@@ -19,7 +21,6 @@ export const useSessionData = () => {
       codeChallenge +
       '&code_challenge_method=S256';
 
-    // console.log(loginUrl);
     return loginUrl;
   };
 
@@ -37,17 +38,21 @@ export const useSessionData = () => {
       Api.Session.getToken(tokenRequestConfig)
         .then(response => {
           setCurrentSession(response);
-          // Storage.LocalStorage.storeLocalData(
-          //   SESSION_CACHE_KEY,
-          //   JSON.stringify(response),
-          // );
+          Storage.storeData(CACHE_SESSION_KEY, response);
           resolve();
         })
         .catch(error => {
           setCurrentSession(null);
-          // Storage.LocalStorage.clearItem(SESSION_CACHE_KEY);
+          Storage.clearItem(CACHE_SESSION_KEY);
           reject(error);
         });
+    });
+  };
+
+  const getCachedSession = () => {
+    Storage.getData(CACHE_SESSION_KEY).then(response => {
+      console.log('From cache: ', response);
+      setCurrentSession(response);
     });
   };
 
@@ -56,5 +61,6 @@ export const useSessionData = () => {
     setCurrentSession,
     generateLoginUrl,
     getAccessToken,
+    getCachedSession,
   };
 };

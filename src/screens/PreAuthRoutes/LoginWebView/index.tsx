@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import WebView from 'react-native-webview';
 import {Loader} from '../../../components/Loader';
 import {LoadingContainer} from './styles';
 import {useSessionContext} from '../../../contexts/Session';
 import {Helpers} from '../../../helpers';
 import {useNavigation} from '@react-navigation/native';
-import {Alert} from 'react-native';
 import {IChallenge} from 'react-native-pkce-challenge/lib/typescript/utils';
 
 export const LoginWebView = () => {
@@ -14,7 +13,6 @@ export const LoginWebView = () => {
   const pkceChallenge = useRef<IChallenge>(
     Helpers.CodeGenerator.generatePkceChallenge(),
   );
-  const [webViewUrlState, setWebViewUrlState] = useState('');
   const sessionContext = useSessionContext();
   const authUrl = sessionContext.generateLoginUrl(
     'https://alunopresente.vercel.app/post-login',

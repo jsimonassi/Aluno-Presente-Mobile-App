@@ -15,10 +15,12 @@
   "dependencies": {
     "-": "^0.0.1",
     "@babel/preset-env": "^7.23.2",
+    "@react-native-async-storage/async-storage": "^1.19.5",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
     "@types/styled-components-react-native": "^5.2.1",
+    "add": "^2.0.6",
     "axios": "^1.6.1",
     "lottie-react-native": "^6.4.0",
     "qs": "^6.11.2",
@@ -36,7 +38,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-webview": "^13.6.2",
     "styled-components": "^6.0.8",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.21"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

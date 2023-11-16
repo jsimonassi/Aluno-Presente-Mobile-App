@@ -18,3 +18,7 @@ export type PreAuthRoutesParamList = {
   Login: undefined;
   LoginWebView: undefined;
 };
+
+export type LoaderRoutesParamList = {
+  SplashLoader: undefined;
+};
