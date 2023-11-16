@@ -1,14 +1,24 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect} from 'react';
 import {PostAuthRoutes} from './PostAuthRoutes';
+import {PreAuthRoutes} from './PreAuthRoutes';
+import {useSessionContext} from '../contexts/Session';
+import {LoaderRoutes} from './LoaderRoutes';
 
 export const MainRouter = () => {
-  // const userStore = useUserContext();
+  const {currentSession, getCachedSession} = useSessionContext();
 
-  // if (userStore.data.loadingUserAndLegalData)
-  // 	return <Loader visible />;
+  useEffect(() => {
+    getCachedSession();
+  }, []);
 
-  // if (!userStore.data.loggedUser)
-  // 	return <PreAuthRoutes />;
+  if (currentSession != null && !currentSession.accessToken) {
+    return <LoaderRoutes />;
+  }
+
+  if (currentSession === null) {
+    return <PreAuthRoutes />;
+  }
 
   return <PostAuthRoutes />;
 };

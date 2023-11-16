@@ -21,7 +21,7 @@ export const RouterContainer = () => {
         ...DefaultTheme,
         colors: {
           ...DefaultTheme.colors,
-          background: appTheme.palette.background,
+          background: appTheme.palette.pageBackgroundColor,
         },
       }}
       ref={navigationRef}

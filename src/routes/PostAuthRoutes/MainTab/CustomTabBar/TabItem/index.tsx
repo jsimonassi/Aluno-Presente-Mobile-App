@@ -7,7 +7,7 @@ import {
   TabNavigationState,
 } from '@react-navigation/native';
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs';
-import {MainTabParamList} from '../../../../../types/app/route/PostAuthRoutes';
+import {MainTabParamList} from '../../../../../types/app/route';
 
 interface OwnProps {
   iconInactive: ReactNode;
