@@ -9,3 +9,10 @@ export const Container = styled.View`
   padding-bottom: 10%;
   padding-top: 20%;
 `;
+
+export const LoaderContainer = styled.View`
+  flex: 1;
+  background-color: ${({theme}) => theme.palette.pageBackgroundColor};
+  align-items: center;
+  justify-content: center;
+`;
