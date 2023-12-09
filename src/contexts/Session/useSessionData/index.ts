@@ -6,17 +6,24 @@ import {TokenRequestConfig, TokenSession} from '../../../types/api/Session';
 const CACHE_SESSION_KEY = 'session_cache_key';
 
 export const useSessionData = () => {
-  const [currentSession, setCurrentSession] = useState<TokenSession | null>(
+  const [currentSession, setSession] = useState<TokenSession | null>(
     {} as TokenSession,
   );
 
+  /**
+   * @deprecated
+   * All login implementation was replaced by react-native-app-auth
+   * @param redirectUrl string url callback
+   * @param codeChallenge pkce code challenge
+   * @returns complete login url
+   */
   const generateLoginUrl = (redirectUrl: string, codeChallenge: string) => {
     const loginUrl =
       AUTH_SERVER_BASE_URL +
       '/v1/auth/oauth2/authorize?response_type=code&client_id=' +
       AUTH_CLIENT_ID +
       '&scope=openid%20read%20profile&redirect_uri=' +
-      redirectUrl + //TODO: Replace redirect_url with backend blank route
+      redirectUrl +
       '&code_challenge=' +
       codeChallenge +
       '&code_challenge_method=S256';
@@ -24,6 +31,13 @@ export const useSessionData = () => {
     return loginUrl;
   };
 
+  /**
+   * @deprecated
+   * All login implementation was replaced by react-native-app-auth
+   * @param code backend auth code
+   * @param codeVerifier pkce code challenge
+   * @returns Promise<void>
+   */
   const getAccessToken = (code: string, codeVerifier: string) => {
     return new Promise<void>((resolve, reject) => {
       const tokenRequestConfig: TokenRequestConfig = {
@@ -37,12 +51,12 @@ export const useSessionData = () => {
 
       Api.Session.getToken(tokenRequestConfig)
         .then(response => {
-          setCurrentSession(response);
+          setSession(response);
           Storage.storeData(CACHE_SESSION_KEY, response);
           resolve();
         })
         .catch(error => {
-          setCurrentSession(null);
+          setSession(null);
           Storage.clearItem(CACHE_SESSION_KEY);
           reject(error);
         });
@@ -54,6 +68,11 @@ export const useSessionData = () => {
       console.log('From cache: ', response);
       setCurrentSession(response);
     });
+  };
+
+  const setCurrentSession = (session: TokenSession) => {
+    setSession(session);
+    Storage.storeData(CACHE_SESSION_KEY, session);
   };
 
   return {

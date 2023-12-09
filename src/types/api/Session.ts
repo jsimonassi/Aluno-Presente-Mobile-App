@@ -9,8 +9,9 @@ export interface TokenRequestConfig {
 
 export interface TokenSession {
   accessToken: string;
-  expiresIn: number;
+  accessTokenExpirationDate: string;
   idToken: string;
-  scope: string;
+  scopes: string[];
   tokenType: string;
+  refreshToken: string | null;
 }
