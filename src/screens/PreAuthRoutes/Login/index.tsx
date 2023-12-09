@@ -13,6 +13,7 @@ import {AUTH_CLIENT_ID, AUTH_SERVER_BASE_URL} from '@env';
 import {useSessionContext} from '../../../contexts/Session';
 import {TokenSession} from '../../../types/api/Session';
 import {Loader} from '../../../components/Loader';
+import {Api} from '../../../services';
 
 export const Login = () => {
   const appTheme = useTheme();
@@ -28,14 +29,20 @@ export const Login = () => {
   };
 
   const handleLogin = async () => {
-    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 300);
     try {
       const result = await authorize(config);
-      if (result && result.accessToken) {
-        console.log(result);
-        setCurrentSession(result as TokenSession);
-      }
+      Api.setAuthToken(result.accessToken);
+      const currentUser = await Api.Session.getCurrentUser();
+      const session: TokenSession = {
+        ...result,
+        currentUser: currentUser,
+      };
+      setCurrentSession(session);
     } catch (error) {
+      //TODO: Is important to handle this error in a better way?
       console.log(error);
     } finally {
       setIsLoading(false);

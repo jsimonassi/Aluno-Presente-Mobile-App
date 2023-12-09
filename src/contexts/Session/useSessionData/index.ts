@@ -3,7 +3,7 @@ import {AUTH_SERVER_BASE_URL, AUTH_CLIENT_ID} from '@env';
 import {Api, Storage} from '../../../services';
 import {TokenRequestConfig, TokenSession} from '../../../types/api/Session';
 
-const CACHE_SESSION_KEY = 'session_cache_key';
+export const CACHE_SESSION_KEY = 'session_cache_key';
 
 export const useSessionData = () => {
   const [currentSession, setSession] = useState<TokenSession | null>(
@@ -64,9 +64,17 @@ export const useSessionData = () => {
   };
 
   const getCachedSession = () => {
-    Storage.getData(CACHE_SESSION_KEY).then(response => {
-      console.log('From cache: ', response);
-      setCurrentSession(response);
+    return new Promise<TokenSession | null>((resolve, reject) => {
+      Storage.getData(CACHE_SESSION_KEY)
+        .then(response => {
+          console.log('From cache: ', response);
+          setCurrentSession(response);
+          Api.setAuthToken(response.accessToken);
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
   };
 
@@ -75,11 +83,17 @@ export const useSessionData = () => {
     Storage.storeData(CACHE_SESSION_KEY, session);
   };
 
+  const logout = () => {
+    setSession(null);
+    Storage.clearItem(CACHE_SESSION_KEY);
+  };
+
   return {
     currentSession,
     setCurrentSession,
     generateLoginUrl,
     getAccessToken,
     getCachedSession,
+    logout,
   };
 };

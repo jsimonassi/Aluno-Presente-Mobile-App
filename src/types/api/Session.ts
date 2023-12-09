@@ -14,4 +14,12 @@ export interface TokenSession {
   scopes: string[];
   tokenType: string;
   refreshToken: string | null;
+  currentUser: User;
+}
+
+export interface User {
+  name: string;
+  alias: string;
+  registration: string;
+  email: string;
 }
