@@ -2,7 +2,7 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 
 export type PostAuthRoutesParamList = {
   MainTab: NavigatorScreenParams<MainTabParamList>;
-  HomeStack: NavigatorScreenParams<HomeStackParamList>;
+  ProfileStack: NavigatorScreenParams<ProfileStackParamList>;
 };
 
 export type MainTabParamList = {
@@ -12,7 +12,9 @@ export type MainTabParamList = {
   Profile: undefined;
 };
 
-export type HomeStackParamList = {};
+export type ProfileStackParamList = {
+  Profile: undefined;
+};
 
 export type PreAuthRoutesParamList = {
   Login: undefined;
