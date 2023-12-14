@@ -19,7 +19,7 @@ export interface TokenSession {
 
 export interface User {
   name: string;
-  alias: string;
-  registration: string;
+  alias: string | null;
+  registration: string | null;
   email: string;
 }

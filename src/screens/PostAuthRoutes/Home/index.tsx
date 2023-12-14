@@ -1,16 +1,21 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Header} from './components';
-import {User} from '../../../types/api/User';
 import EmptyClassList from './components/EmptyClassList';
+import {useSessionContext} from '../../../contexts/Session';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {PostAuthRoutesParamList} from '../../../types/app/route';
 
 export const Home = () => {
-  const mockedUser: User = {
-    name: 'João Victor Simonassi',
-    school: 'Universidade Federal Fluminense',
-  };
-
+  const {currentSession} = useSessionContext();
+  const navigator =
+    useNavigation<StackNavigationProp<PostAuthRoutesParamList>>();
   const mockedClassList = [];
+
+  if (!currentSession) {
+    return null;
+  }
 
   const renderContent = () => {
     if (mockedClassList.length === 0) {
@@ -20,7 +25,10 @@ export const Home = () => {
 
   return (
     <View>
-      <Header currentUser={mockedUser} />
+      <Header
+        currentUser={currentSession.currentUser}
+        onPress={() => navigator.navigate('ProfileStack', {screen: 'Profile'})}
+      />
       {renderContent()}
     </View>
   );
