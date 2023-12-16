@@ -31,6 +31,7 @@
     "react-native-gesture-handler": "^2.13.4",
     "react-native-haptic-feedback": "^2.2.0",
     "react-native-linear-gradient": "^2.8.3",
+    "react-native-permissions": "^4.0.1",
     "react-native-pkce-challenge": "^5.2.0",
     "react-native-reanimated": "^3.5.4",
     "react-native-reanimated-carousel": "^3.5.1",

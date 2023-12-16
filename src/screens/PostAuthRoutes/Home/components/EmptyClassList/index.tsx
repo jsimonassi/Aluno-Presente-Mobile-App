@@ -11,8 +11,8 @@ const EmptyClassList = () => {
         Nenhuma disciplina encontrada!
       </MainText>
       <MainText style={{fontSize: 14, textAlign: 'center'}}>
-        Use o código da disciplina para acessar sua turma ou importe suas turmas
-        do classroom
+        Use o código da disciplina para acessar sua turma ou entre em contato
+        com seu professor.
       </MainText>
     </EmptyClassListContainerStyled>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import React, {useMemo} from 'react';
 import {ReactNode} from 'react';
 import {Container} from './styles';
