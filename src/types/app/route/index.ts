@@ -16,6 +16,11 @@ export type ProfileStackParamList = {
   Profile: undefined;
 };
 
+export type PermissionsStackParamList = {
+  CameraPermission: undefined;
+  LocationPermission: undefined;
+};
+
 export type PreAuthRoutesParamList = {
   Login: undefined;
   LoginWebView: undefined;

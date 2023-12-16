@@ -5,9 +5,12 @@ import {PreAuthRoutes} from './PreAuthRoutes';
 import {useSessionContext} from '../contexts/Session';
 import {LoaderRoutes} from './LoaderRoutes';
 import {Api} from '../services';
+import {PermissionsStack} from './PostAuthRoutes/PermissionsStack';
+import {usePermissionContext} from '../contexts/Permission';
 
 export const MainRouter = () => {
   const {currentSession, getCachedSession, logout} = useSessionContext();
+  const {permissionsToRequest} = usePermissionContext();
 
   useEffect(() => {
     getCachedSession();
@@ -20,6 +23,10 @@ export const MainRouter = () => {
 
   if (currentSession === null) {
     return <PreAuthRoutes />;
+  }
+
+  if (permissionsToRequest.length > 0) {
+    return <PermissionsStack />;
   }
 
   return <PostAuthRoutes />;

@@ -69,7 +69,7 @@ export const useSessionData = () => {
         .then(response => {
           console.log('From cache: ', response);
           setCurrentSession(response);
-          Api.setAuthToken(response.accessToken);
+          Api.setAuthToken(response?.accessToken ?? null);
           resolve(response);
         })
         .catch(error => {
