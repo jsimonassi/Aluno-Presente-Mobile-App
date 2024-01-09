@@ -1,5 +1,10 @@
 import 'styled-components/native';
 
+type TypographyItem = Pick<
+  CSSObject,
+  'fontFamily' | 'fontStyle' | 'fontWeight' | 'fontSize' | 'color'
+>;
+
 declare module 'styled-components/native' {
   export interface DefaultTheme {
     palette: {
@@ -10,6 +15,7 @@ declare module 'styled-components/native' {
       surface1: string;
       surface2: string;
       surface3: string;
+      surface4: string;
 
       greyTextLabel: string;
       fontIconColor: string;
@@ -20,6 +26,13 @@ declare module 'styled-components/native' {
       gradientBgEnd: string;
 
       modalBackdrop: string;
+    };
+    typography: {
+      title: TypographyItem;
+      subtitle: TypographyItem;
+      boldSubtitle: TypographyItem;
+      p: TypographyItem;
+      error: TypographyItem;
     };
   }
 }

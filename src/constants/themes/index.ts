@@ -9,6 +9,7 @@ export const LightTheme: DefaultTheme = {
     surface1: '#E6E6E6B2',
     surface2: '#CACCCE80',
     surface3: '#282828',
+    surface4: '#E6E6E6',
 
     greyTextLabel: '#86888A',
     fontIconColor: '#F6F6F6',
@@ -19,5 +20,42 @@ export const LightTheme: DefaultTheme = {
     gradientBgEnd: '#19222B',
 
     modalBackdrop: '#0000007D',
+  },
+  typography: {
+    title: {
+      color: '#2F4153',
+      fontFamily: 'Nunito-Bold',
+      fontSize: 24,
+      fontWeight: 'bold',
+      fontStyle: 'normal',
+    },
+    subtitle: {
+      color: '#313335',
+      fontFamily: 'Nunito-Bold',
+      fontSize: 18,
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+    },
+    boldSubtitle: {
+      color: '#86888A',
+      fontFamily: 'Nunito-Bold',
+      fontSize: 14,
+      fontWeight: 'bold',
+      fontStyle: 'normal',
+    },
+    p: {
+      color: '#86888A',
+      fontFamily: 'Nunito-Regular',
+      fontSize: 14,
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+    },
+    error: {
+      color: '#D25454',
+      fontFamily: 'Nunito-Regular',
+      fontSize: 14,
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+    },
   },
 };
