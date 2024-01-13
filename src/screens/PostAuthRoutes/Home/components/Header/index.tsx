@@ -5,20 +5,22 @@ import {
   ProfileImageStyled,
 } from './styles';
 import {MainText, SecondaryText} from '../../../../../components/Text';
-import {User} from '../../../../../types/api/Session';
 import {useTheme} from 'styled-components';
 import {Pressable} from 'react-native';
+import {useSessionContext} from '../../../../../contexts/Session';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {PostAuthRoutesParamList} from '../../../../../types/app/route';
 
-interface OwnProps {
-  currentUser: User;
-  onPress: () => void;
-}
-
-const Header = (props: OwnProps) => {
+const Header = () => {
   const currentTheme = useTheme();
+  const {currentSession} = useSessionContext();
+  const navigator =
+    useNavigation<StackNavigationProp<PostAuthRoutesParamList>>();
 
   return (
-    <Pressable onPress={props.onPress}>
+    <Pressable
+      onPress={() => navigator.navigate('ProfileStack', {screen: 'Profile'})}>
       <HeaderContainerStyled>
         <ProfileImageStyled>
           <MainText
@@ -31,12 +33,12 @@ const Header = (props: OwnProps) => {
               textAlignVertical: 'center',
               color: currentTheme.palette.fontIconColor,
             }}>
-            {props.currentUser.name[0]}
+            {currentSession?.currentUser.name[0]}
           </MainText>
         </ProfileImageStyled>
         <InfoGroupStyled>
           <SecondaryText style={{fontSize: 20, fontWeight: 'bold'}}>
-            Olá, {props.currentUser.name.split(' ')[0]}
+            Olá, {currentSession?.currentUser.name.split(' ')[0]}
           </SecondaryText>
           {/* TODO: Get info from Backend */}
           <SecondaryText>Universidade Federal Fluminense</SecondaryText>
