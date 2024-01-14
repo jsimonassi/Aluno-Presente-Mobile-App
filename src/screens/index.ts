@@ -4,5 +4,6 @@ export {Notifications} from './PostAuthRoutes/Notifications';
 export {Profile} from './PostAuthRoutes/Profile';
 export {Login} from './PreAuthRoutes';
 export {SplashLoader} from './LoaderRoutes';
+export {AboutClass} from './PostAuthRoutes/AboutClass';
 
 //TODO: Refactor exportation of screens

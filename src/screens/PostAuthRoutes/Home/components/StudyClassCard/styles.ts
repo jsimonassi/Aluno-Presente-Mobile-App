@@ -10,7 +10,7 @@ export const CardContainerStyled = styled.View<CardProps>`
   margin: 8px 24px;
   border-radius: 16px;
   padding: 8px 16px;
-  height: ${props => (props.isHappingNow ? '140px' : '90px')};
+  height: auto;
 `;
 
 export const TitleStyled = styled.Text<CardProps>`
@@ -33,11 +33,13 @@ export const TeacherNameStyled = styled.Text<CardProps>`
   ${({theme}) => theme.typography.p};
   color: ${({theme, isHappingNow}) =>
     isHappingNow ? theme.palette.surface1 : theme.typography.p.color};
+  margin-bottom: 8px;
 `;
 
 export const HappingNowTextStyled = styled.Text`
   ${({theme}) => theme.typography.boldSubtitle};
   color: ${({theme}) => theme.palette.secondaryColor};
+  margin-top: 16px;
 `;
 
 interface CardProps {

@@ -1,4 +1,5 @@
 import {Api} from '..';
+import {Helpers} from '../../../helpers';
 import {StudyClass} from '../../../types/app/class';
 
 export const Classes = {
@@ -7,7 +8,7 @@ export const Classes = {
       Api.resourceApi
         .get('/courses/member')
         .then(response => {
-          resolve(response.data);
+          resolve(Helpers.DateHelper.addIsNowInfoToClassList(response.data));
         })
         .catch(error => {
           reject(error);

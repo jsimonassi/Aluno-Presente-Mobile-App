@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {
   CardContainerStyled,
   HappingNowTextStyled,
@@ -10,28 +10,19 @@ import {DayOfWeekStudyClass, StudyClass} from '../../../../../types/app/class';
 import {Pressable, View} from 'react-native';
 import moment from 'moment';
 import 'moment/locale/pt-br';
+import {Helpers} from '../../../../../helpers';
 
 interface OwnProps {
   currentStudyClass: StudyClass;
+  isHappingNow?: boolean;
   onPress: () => void;
 }
 
-export const StudyClassCard = ({currentStudyClass, onPress}: OwnProps) => {
-  const isHappingNow = useMemo(() => {
-    let now = moment();
-    let isNow = false;
-
-    currentStudyClass.daysOfWeek.forEach(day => {
-      let start = moment(day.start);
-      let end = moment(day.end);
-      if (now.isBetween(start, end)) {
-        isNow = true;
-      }
-    });
-
-    return isNow;
-  }, [currentStudyClass]);
-
+export const StudyClassCard = ({
+  currentStudyClass,
+  onPress,
+  isHappingNow = false,
+}: OwnProps) => {
   const formatClassTime = (dayOfWeekStudyClass: DayOfWeekStudyClass[]) => {
     let timeMap: {[key: string]: string[]} = {};
 
@@ -70,7 +61,9 @@ export const StudyClassCard = ({currentStudyClass, onPress}: OwnProps) => {
   };
 
   return (
-    <Pressable onPress={onPress}>
+    <Pressable
+      onPressIn={() => Helpers.Feedbacks.triggerFeedback('impactLight')}
+      onPress={onPress}>
       <CardContainerStyled isHappingNow={isHappingNow}>
         <View>
           <TitleStyled isHappingNow={isHappingNow}>

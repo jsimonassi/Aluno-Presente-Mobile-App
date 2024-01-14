@@ -14,3 +14,8 @@ export const ContainerStyled = styled.View`
   justify-content: center;
   flex-direction: column;
 `;
+
+export const ScrollViewStyled = styled.ScrollView`
+  width: 100%;
+  height: 85%;
+`;

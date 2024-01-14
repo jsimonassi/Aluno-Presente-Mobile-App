@@ -1,8 +1,10 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
+import {StudyClass} from '../class';
 
 export type PostAuthRoutesParamList = {
   MainTab: NavigatorScreenParams<MainTabParamList>;
   ProfileStack: NavigatorScreenParams<ProfileStackParamList>;
+  StudyClassStack: NavigatorScreenParams<StudyClassStackParamList>;
 };
 
 export type MainTabParamList = {
@@ -10,6 +12,12 @@ export type MainTabParamList = {
   Notifications: undefined;
   NewClass: undefined;
   Profile: undefined;
+};
+
+export type StudyClassStackParamList = {
+  AboutClass: {
+    selectedClass: StudyClass;
+  };
 };
 
 export type ProfileStackParamList = {

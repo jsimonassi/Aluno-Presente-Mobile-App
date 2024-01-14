@@ -1,19 +1,14 @@
 import React from 'react';
-import {
-  HeaderContainerStyled,
-  InfoGroupStyled,
-  ProfileImageStyled,
-} from './styles';
-import {MainText, SecondaryText} from '../../../../../components/Text';
-import {useTheme} from 'styled-components';
+import {HeaderContainerStyled, InfoGroupStyled} from './styles';
+import {SecondaryText} from '../Text';
 import {Pressable} from 'react-native';
-import {useSessionContext} from '../../../../../contexts/Session';
+import {useSessionContext} from '../../contexts/Session';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {PostAuthRoutesParamList} from '../../../../../types/app/route';
+import {PostAuthRoutesParamList} from '../../types/app/route';
+import {LetterProfileImage} from '../LetterProfileImage';
 
 const Header = () => {
-  const currentTheme = useTheme();
   const {currentSession} = useSessionContext();
   const navigator =
     useNavigation<StackNavigationProp<PostAuthRoutesParamList>>();
@@ -22,20 +17,7 @@ const Header = () => {
     <Pressable
       onPress={() => navigator.navigate('ProfileStack', {screen: 'Profile'})}>
       <HeaderContainerStyled>
-        <ProfileImageStyled>
-          <MainText
-            style={{
-              fontSize: 40,
-              fontWeight: 'normal',
-              width: 60,
-              height: 60,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-              color: currentTheme.palette.fontIconColor,
-            }}>
-            {currentSession?.currentUser.name[0]}
-          </MainText>
-        </ProfileImageStyled>
+        <LetterProfileImage name={currentSession?.currentUser.name ?? '-'} />
         <InfoGroupStyled>
           <SecondaryText style={{fontSize: 20, fontWeight: 'bold'}}>
             Olá, {currentSession?.currentUser.name.split(' ')[0]}

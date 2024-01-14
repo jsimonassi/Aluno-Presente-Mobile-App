@@ -5,6 +5,7 @@ export interface StudyClass {
   name: string;
   owner: string;
   period: string;
+  isHappingNow?: boolean;
 }
 
 export interface DayOfWeekStudyClass {
