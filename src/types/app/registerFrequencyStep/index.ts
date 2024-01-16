@@ -1,0 +1,7 @@
+export enum RegisterFrequencyStep {
+  SHOW_TIPS,
+  CHECK_CAMERA_PERMISSION,
+  READ_QR_CODE,
+  CHECK_GPS_PERMISSION,
+  GET_POSITION,
+}
