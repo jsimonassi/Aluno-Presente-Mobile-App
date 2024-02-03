@@ -32,7 +32,7 @@ export const AboutClass = () => {
     <ContainerStyled>
       <ClassNameBigHeader
         className={selectedStudyClass.name}
-        teacherName={selectedStudyClass.owner}
+        teacherName={selectedStudyClass.teacher}
         attendanceAvailable={true}
         onPressAttendance={handleStartRegisterFrequency}
         onPressBack={() => navigator.goBack()}

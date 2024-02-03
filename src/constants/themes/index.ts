@@ -25,14 +25,14 @@ export const LightTheme: DefaultTheme = {
     title: {
       color: '#2F4153',
       fontFamily: 'Nunito-Bold',
-      fontSize: 24,
+      fontSize: 22,
       fontWeight: 'bold',
       fontStyle: 'normal',
     },
     subtitle: {
       color: '#313335',
       fontFamily: 'Nunito-Bold',
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: 'normal',
       fontStyle: 'normal',
     },

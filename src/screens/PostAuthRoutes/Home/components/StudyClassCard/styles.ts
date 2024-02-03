@@ -40,6 +40,7 @@ export const HappingNowTextStyled = styled.Text`
   ${({theme}) => theme.typography.boldSubtitle};
   color: ${({theme}) => theme.palette.secondaryColor};
   margin-top: 16px;
+  font-size: 12px;
 `;
 
 interface CardProps {

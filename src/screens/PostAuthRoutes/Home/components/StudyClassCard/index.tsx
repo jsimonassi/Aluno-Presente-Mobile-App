@@ -73,11 +73,13 @@ export const StudyClassCard = ({
             {formatClassTime(currentStudyClass.daysOfWeek)}
           </SubtitleStyled>
           <TeacherNameStyled isHappingNow={isHappingNow}>
-            {currentStudyClass.owner}
+            {currentStudyClass.teacher}
           </TeacherNameStyled>
         </View>
         {isHappingNow && (
-          <HappingNowTextStyled>Acontecendo agora</HappingNowTextStyled>
+          <HappingNowTextStyled>
+            O registro de frequência iniciará em breve
+          </HappingNowTextStyled>
         )}
       </CardContainerStyled>
     </Pressable>

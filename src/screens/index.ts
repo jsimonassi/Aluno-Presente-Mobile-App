@@ -6,5 +6,3 @@ export {Login} from './PreAuthRoutes';
 export {SplashLoader} from './LoaderRoutes';
 export {AboutClass} from './PostAuthRoutes/AboutClass';
 export {RegisterFrequencyFlux} from './PostAuthRoutes/RegisterFrequencyFlux';
-
-//TODO: Refactor exportation of screens
