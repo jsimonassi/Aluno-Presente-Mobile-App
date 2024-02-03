@@ -10,14 +10,19 @@ import {
 import {assets} from '../../../../../assets';
 import {MainButton} from '../../../../../components/Buttons';
 import {usePermissionContext} from '../../../../../contexts/Permission';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {DeviceScreenNavigationProp} from '../../types';
 import {PermissionData} from '../../../../../types/app/permissions';
-import {BackHandler} from 'react-native';
+import {BackHandler, Linking} from 'react-native';
+import {PermissionsStackParamList} from '../../../../../types/app/route';
+import {RESULTS} from 'react-native-permissions';
 
 export const CameraPermission = () => {
   const permissionContext = usePermissionContext();
   const navigation = useNavigation<DeviceScreenNavigationProp>();
+  const route =
+    useRoute<RouteProp<PermissionsStackParamList, 'CameraPermission'>>();
+  const isStandAlone = route.params?.standalone ?? false;
 
   useEffect(() => {
     const backAction = () => {
@@ -41,7 +46,7 @@ export const CameraPermission = () => {
         permissionsToRequestArray,
       );
       if (nextScreen) {
-        navigation.navigate(nextScreen);
+        navigation.navigate(nextScreen, {});
         return;
       }
       navigation.navigate('Home');
@@ -49,11 +54,22 @@ export const CameraPermission = () => {
   };
 
   const handleContinue = () => {
-    permissionContext
-      .requestPermission('camera')
-      .then(permissionsToRequestArray =>
-        navigateToNextScreen(permissionsToRequestArray),
-      );
+    permissionContext.checkCameraPermission().then(result => {
+      console.log(result);
+      if (result === RESULTS.BLOCKED || isStandAlone) {
+        Linking.openSettings();
+      } else {
+        permissionContext
+          .requestPermission('camera')
+          .then(permissionsToRequestArray => {
+            if (isStandAlone) {
+              navigation.goBack();
+              return;
+            }
+            navigateToNextScreen(permissionsToRequestArray);
+          });
+      }
+    });
   };
 
   return (

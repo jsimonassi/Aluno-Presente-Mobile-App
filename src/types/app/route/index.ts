@@ -1,8 +1,11 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
+import {StudyClass} from '../class';
 
 export type PostAuthRoutesParamList = {
   MainTab: NavigatorScreenParams<MainTabParamList>;
   ProfileStack: NavigatorScreenParams<ProfileStackParamList>;
+  StudyClassStack: NavigatorScreenParams<RegisterFrequencyStackParamList>;
+  PermissionsStack: NavigatorScreenParams<PermissionsStackParamList>;
 };
 
 export type MainTabParamList = {
@@ -12,13 +15,24 @@ export type MainTabParamList = {
   Profile: undefined;
 };
 
+export type RegisterFrequencyStackParamList = {
+  AboutClass: {
+    selectedClass: StudyClass;
+  };
+  RegisterFrequencyFlux: undefined;
+};
+
 export type ProfileStackParamList = {
   Profile: undefined;
 };
 
 export type PermissionsStackParamList = {
-  CameraPermission: undefined;
-  LocationPermission: undefined;
+  CameraPermission: {
+    standalone?: boolean;
+  };
+  LocationPermission: {
+    standalone?: boolean;
+  };
 };
 
 export type PreAuthRoutesParamList = {

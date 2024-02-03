@@ -94,9 +94,19 @@ export const usePermissionData = () => {
     return null;
   };
 
+  const checkCameraPermission = () => {
+    return PermissionService.checkCameraPermission();
+  };
+
+  const checkGpsPermission = () => {
+    return PermissionService.checkCameraPermission();
+  };
+
   return {
     permissionsToRequest,
     requestPermission,
     getNextNavigationScreen,
+    checkCameraPermission,
+    checkGpsPermission,
   };
 };

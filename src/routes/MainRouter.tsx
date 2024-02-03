@@ -13,7 +13,13 @@ export const MainRouter = () => {
   const {permissionsToRequest} = usePermissionContext();
 
   useEffect(() => {
-    getCachedSession();
+    getCachedSession()
+      .then(() => {
+        Api.createAxiosResponseInterceptor(logout);
+      })
+      .catch(() => {
+        logout();
+      });
     Api.createAxiosResponseInterceptor(logout);
   }, []);
 

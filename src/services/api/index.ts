@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {Session} from './session';
+import {Classes} from './classes';
 import {RESOURCE_SERVER_BASE_URL} from '@env';
 import {Storage} from '../storage';
 import {CACHE_SESSION_KEY} from '../../contexts/Session/useSessionData';
@@ -62,6 +63,7 @@ const createAxiosResponseInterceptor = (logoutFunction: () => void) => {
 export const Api = {
   resourceApi,
   Session,
+  Classes,
   createAxiosResponseInterceptor,
   setAuthToken,
 };

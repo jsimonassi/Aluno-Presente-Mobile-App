@@ -4,5 +4,5 @@ export {Notifications} from './PostAuthRoutes/Notifications';
 export {Profile} from './PostAuthRoutes/Profile';
 export {Login} from './PreAuthRoutes';
 export {SplashLoader} from './LoaderRoutes';
-
-//TODO: Refactor exportation of screens
+export {AboutClass} from './PostAuthRoutes/AboutClass';
+export {RegisterFrequencyFlux} from './PostAuthRoutes/RegisterFrequencyFlux';

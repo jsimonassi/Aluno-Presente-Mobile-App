@@ -1,28 +1,33 @@
 import React from 'react';
 import {ButtonTitle, PressableContainer} from './styles';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-
-const options = {
-  enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false,
-};
+import {Helpers} from '../../../helpers';
 
 interface OwnProps {
   text: string;
   onPress: () => void;
   type?: 'primary' | 'secondary';
+  disabled?: boolean;
 }
 
-export const MainButton = ({text, onPress, type = 'primary'}: OwnProps) => {
+export const MainButton = ({
+  text,
+  onPress,
+  type = 'primary',
+  disabled = false,
+}: OwnProps) => {
   return (
     <PressableContainer
       onPress={() => {
-        ReactNativeHapticFeedback.trigger('impactLight', options);
+        if (disabled) {
+          Helpers.Feedbacks.triggerFeedback('impactHeavy');
+          return;
+        }
+        Helpers.Feedbacks.triggerFeedback('impactLight');
         onPress();
       }}
       styleType={type}
       style={({pressed}) => ({
-        opacity: pressed ? 0.9 : 1,
+        opacity: disabled ? 0.5 : pressed ? 0.9 : 1,
       })}>
       <ButtonTitle styleType={type}>{text}</ButtonTitle>
     </PressableContainer>

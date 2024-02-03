@@ -68,9 +68,11 @@ export const useSessionData = () => {
       Storage.getData(CACHE_SESSION_KEY)
         .then(response => {
           console.log('From cache: ', response);
-          setCurrentSession(response);
           Api.setAuthToken(response?.accessToken ?? null);
-          resolve(response);
+          setTimeout(() => {
+            setCurrentSession(response);
+            resolve(response);
+          }, 300);
         })
         .catch(error => {
           reject(error);
