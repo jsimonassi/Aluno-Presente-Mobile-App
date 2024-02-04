@@ -1,13 +1,10 @@
 import {useState} from 'react';
 import {RegisterFrequencyStep} from '../../../types/app/registerFrequencyStep';
-import {Storage} from '../../../services';
+import {Api, Storage} from '../../../services';
 
 const QR_CODE_CACHE_KEY = 'qr_code_cache_key';
 
-// SHOW_TIPS -> CHECK_CAMERA_PERMISSION -> READ_QR_CODE -> CHECK_GPS_PERMISSION -> GET_POSITION
-
 export const useRegisterFrequencyData = () => {
-  //TODO: Validar no backend os dados da sessão de frequencia
   const [registerFrequencyStep, setRegisterFrequencyStep] = useState(
     RegisterFrequencyStep.SHOW_TIPS,
   );
@@ -19,17 +16,23 @@ export const useRegisterFrequencyData = () => {
         if (notShowTip == null || !notShowTip === true) {
           setRegisterFrequencyStep(RegisterFrequencyStep.SHOW_TIPS);
         } else {
-          setRegisterFrequencyStep(
-            RegisterFrequencyStep.CHECK_CAMERA_PERMISSION,
-          );
+          setRegisterFrequencyStep(RegisterFrequencyStep.CHECK_GPS_PERMISSION);
         }
         resolve();
       });
     });
   };
 
+  const registerUserFrequency = (courseId: string, code: string) => {
+    return Api.Attendances.registerUserAttendance(courseId, code);
+  };
+
   const saveTipConfig = (showTip: boolean) => {
     Storage.storeData(QR_CODE_CACHE_KEY, showTip);
+  };
+
+  const checkAttendanceInProgress = (courseId: string) => {
+    return Api.Attendances.checkAttendanceInProgress(courseId);
   };
 
   return {
@@ -37,5 +40,7 @@ export const useRegisterFrequencyData = () => {
     setRegisterFrequencyStep,
     startRegisterFrequency,
     saveTipConfig,
+    registerUserFrequency,
+    checkAttendanceInProgress,
   };
 };

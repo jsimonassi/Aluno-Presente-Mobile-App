@@ -26,7 +26,7 @@ export const LightTheme: DefaultTheme = {
       color: '#2F4153',
       fontFamily: 'Nunito-Bold',
       fontSize: 22,
-      fontWeight: 'bold',
+      fontWeight: 'normal',
       fontStyle: 'normal',
     },
     subtitle: {

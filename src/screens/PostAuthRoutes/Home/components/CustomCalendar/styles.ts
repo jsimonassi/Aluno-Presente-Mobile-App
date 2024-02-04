@@ -62,7 +62,7 @@ export const WeekDayStyled = styled.Text<WeekDayStyledProps>`
     isCurrentDay ? theme.palette.primaryColor : 'transparent'};
   color: ${({theme, isCurrentDay}) =>
     isCurrentDay ? theme.palette.fontIconColor : theme.palette.primaryColor};
-  padding: 4px 2px;
+  padding: 4px 6px;
 `;
 
 interface WeekDayStyledProps {

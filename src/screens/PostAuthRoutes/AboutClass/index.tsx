@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {RegisterFrequencyStackParamList} from '../../../types/app/route';
 import {ClassNameBigHeader} from './components';
-import {ContainerStyled} from './styles';
+import {ContainerStyled, TipInfo} from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {About} from './components/About';
 import {useRegisterFrequencyContext} from '../../../contexts/RegisterFrequency';
@@ -13,14 +14,26 @@ export const AboutClass = () => {
   const route =
     useRoute<RouteProp<RegisterFrequencyStackParamList, 'AboutClass'>>();
   const selectedStudyClass = route.params.selectedClass;
-  const {startRegisterFrequency} = useRegisterFrequencyContext();
+  const {startRegisterFrequency, checkAttendanceInProgress} =
+    useRegisterFrequencyContext();
+  const [attendanceAvailable, setAttendanceAvailable] = useState<
+    boolean | null
+  >(null);
 
-  //TODO: Verificar no backend se existe uma chamada em andamento.
+  useEffect(() => {
+    checkAttendanceInProgress(selectedStudyClass.id)
+      .then(attendanceInfos =>
+        setAttendanceAvailable(attendanceInfos.status === 'STARTED'),
+      )
+      .catch(() => setAttendanceAvailable(false));
+  }, []);
 
   const handleStartRegisterFrequency = () => {
     startRegisterFrequency()
       .then(() => {
-        navigator.navigate('RegisterFrequencyFlux');
+        navigator.navigate('RegisterFrequencyFlux', {
+          selectedClass: selectedStudyClass,
+        });
       })
       .catch(err => {
         navigator.goBack();
@@ -33,10 +46,14 @@ export const AboutClass = () => {
       <ClassNameBigHeader
         className={selectedStudyClass.name}
         teacherName={selectedStudyClass.teacher}
-        attendanceAvailable={true}
+        attendanceAvailable={attendanceAvailable}
         onPressAttendance={handleStartRegisterFrequency}
         onPressBack={() => navigator.goBack()}
       />
+      <TipInfo>
+        Quando o professor iniciar a chamada, o registro de presença ficará
+        disponível.
+      </TipInfo>
       <About aboutInfos={selectedStudyClass.about} />
     </ContainerStyled>
   );

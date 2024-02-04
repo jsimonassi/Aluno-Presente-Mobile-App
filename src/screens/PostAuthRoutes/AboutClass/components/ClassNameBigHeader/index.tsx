@@ -17,7 +17,7 @@ import {Pressable} from 'react-native';
 interface ClassNameBigHeaderProps {
   className: string;
   teacherName: string;
-  attendanceAvailable: boolean;
+  attendanceAvailable: boolean | null;
   onPressBack: () => void;
   onPressAttendance: () => void;
 }
@@ -49,6 +49,7 @@ export const ClassNameBigHeader = ({
           text="Registrar presença"
           type="secondary"
           disabled={!attendanceAvailable}
+          loading={attendanceAvailable == null}
         />
       </FooterContainerStyled>
     </ContainerStyled>

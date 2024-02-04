@@ -19,7 +19,9 @@ export type RegisterFrequencyStackParamList = {
   AboutClass: {
     selectedClass: StudyClass;
   };
-  RegisterFrequencyFlux: undefined;
+  RegisterFrequencyFlux: {
+    selectedClass: StudyClass;
+  };
 };
 
 export type ProfileStackParamList = {

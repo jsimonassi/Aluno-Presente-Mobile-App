@@ -12,21 +12,19 @@ export const ContainerStyled = styled.View`
 export const CheckingTextStyled = styled.Text`
   ${({theme}) => theme.typography.title};
   color: ${({theme}) => theme.palette.fontIconColor};
-  margin-bottom: 36px;
-`;
-
-export const TipTextStyled = styled.Text`
-  ${({theme}) => theme.typography.p};
-  color: ${({theme}) => theme.palette.fontIconColor};
-  margin-top: 36px;
+  margin-bottom: 64px;
+  width: 70%;
   text-align: center;
 `;
 
-export const CameraContainerStyled = styled.View`
+export const GpsLogoContainerStyled = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 300px;
-  border-radius: 16px;
+`;
+
+export const GpsLogoStyled = styled.Image`
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 `;
