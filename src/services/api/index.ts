@@ -10,7 +10,6 @@ import {TokenSession} from '../../types/api/Session';
 const resourceApi = axios.create({
   baseURL: RESOURCE_SERVER_BASE_URL + '/v1/api',
   headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-  timeout: 5000,
   timeoutErrorMessage: 'Tempo de resposta excedido',
 });
 
@@ -29,7 +28,7 @@ const createAxiosResponseInterceptor = (logoutFunction: () => void) => {
     },
     async function (err) {
       const originalReq = err.config;
-      if (err.response.status === 401 && err.config && !err.config._retry) {
+      if (err.response?.status === 401 && err.config && !err.config._retry) {
         console.log('Token expired, updating...');
         originalReq._retry = true;
         const currentSession: TokenSession = await Storage.getData(

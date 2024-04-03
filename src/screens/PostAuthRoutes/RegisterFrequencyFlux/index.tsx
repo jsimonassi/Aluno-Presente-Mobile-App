@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {View} from 'react-native';
-import {useRegisterFrequencyContext} from '../../../contexts/RegisterFrequency';
-import {RegisterFrequencyStep} from '../../../types/app/registerFrequencyStep';
+import { View } from 'react-native';
+import { useRegisterFrequencyContext } from '../../../contexts/RegisterFrequency';
+import { RegisterFrequencyStep } from '../../../types/app/registerFrequencyStep';
 import {
   CameraPermissionValidator,
   ErrorInfo,
@@ -12,23 +12,25 @@ import {
   QrCodeTips,
   SuccessInfo,
 } from './components';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RegisterFrequencyStackParamList} from '../../../types/app/route';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {Loader} from '../../../components/Loader';
-import {BlueContainerStyled} from './styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RegisterFrequencyStackParamList } from '../../../types/app/route';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { Loader } from '../../../components/Loader';
+import { BlueContainerStyled } from './styles';
 import { Helpers } from '../../../helpers';
+import { ReadStatusCodeView } from './components/ReadStatusCodeView';
+import { SessionCodeTips } from './components/SessionCodeTips';
 
 export const RegisterFrequencyFlux = () => {
-  const {registerFrequencyStep, setRegisterFrequencyStep, startRegisterFrequency, registerUserFrequency} = useRegisterFrequencyContext();
+  const { registerFrequencyStep, setRegisterFrequencyStep, startRegisterFrequency, registerUserFrequency } = useRegisterFrequencyContext();
   const navigator = useNavigation<StackNavigationProp<RegisterFrequencyStackParamList>>();
   const route = useRoute<RouteProp<RegisterFrequencyStackParamList, 'RegisterFrequencyFlux'>>();
   const classInfo = route.params.selectedClass;
-  const ALLOWED_DISTANCE = 100;
+  const attendanceInfos = route.params.attendanceInfos;
+  const ALLOWED_DISTANCE_IN_KM = 1;
 
-  const validateQrCode = (qrCodeValue: string) => {
-    setRegisterFrequencyStep(RegisterFrequencyStep.CHECKING_QR_CODE);
-    console.log('Validando frquencia do curso: ', classInfo.id, ' com código: ', qrCodeValue);
+  const validateCode = (qrCodeValue: string) => {
+    setRegisterFrequencyStep(RegisterFrequencyStep.CHECKING_CODE);
     registerUserFrequency(classInfo.id, qrCodeValue)
       .then(() => {
         setRegisterFrequencyStep(RegisterFrequencyStep.SUCCESS);
@@ -43,32 +45,61 @@ export const RegisterFrequencyFlux = () => {
       return;
     }
 
-    if (Helpers.Geolocation.haversineDistance(
-      Number.parseFloat(latitude),
-      Number.parseFloat(longitude),
-      -23.55052,
-      -46.633308) < ALLOWED_DISTANCE){
+    if (attendanceInfos.location &&
+      Helpers.Geolocation.haversineDistance(
+        Number.parseFloat(latitude),
+        Number.parseFloat(longitude),
+        attendanceInfos.location?.latitude,
+        attendanceInfos.location?.longitude) > ALLOWED_DISTANCE_IN_KM) {
       setRegisterFrequencyStep(RegisterFrequencyStep.GPS_ERROR);
       return;
     }
+
+    if (attendanceInfos.origin === 'STATIC'){
+      setRegisterFrequencyStep(RegisterFrequencyStep.READ_SESSION_CODE);
+      return;
+    }
+
     setRegisterFrequencyStep(RegisterFrequencyStep.CHECK_CAMERA_PERMISSION);
   };
 
   const pageContent = () => {
     switch (registerFrequencyStep) {
-      case RegisterFrequencyStep.SHOW_TIPS:
+      case RegisterFrequencyStep.SHOW_QR_CODE_TIPS:
         return (
           <QrCodeTips
             onBackPress={() => navigator.goBack()}
-            onStartPress={() =>
-              setRegisterFrequencyStep(
-                RegisterFrequencyStep.CHECK_CAMERA_PERMISSION,
-              )
+            onStartPress={() => {
+              if (attendanceInfos.location && attendanceInfos.location.latitude && attendanceInfos.location.longitude) {
+                setRegisterFrequencyStep(RegisterFrequencyStep.CHECK_GPS_PERMISSION);
+              } else {
+                setRegisterFrequencyStep(
+                  RegisterFrequencyStep.CHECK_CAMERA_PERMISSION,
+                );
+              }
+            }
             }
           />
         );
 
-        case RegisterFrequencyStep.CHECK_GPS_PERMISSION:
+      case RegisterFrequencyStep.SHOW_SESSION_CODE_TIPS:
+        return (
+          <SessionCodeTips
+            onBackPress={() => navigator.goBack()}
+            onStartPress={() => {
+              if (attendanceInfos.location && attendanceInfos.location.latitude && attendanceInfos.location.longitude) {
+                setRegisterFrequencyStep(RegisterFrequencyStep.CHECK_GPS_PERMISSION);
+              } else {
+                setRegisterFrequencyStep(
+                  RegisterFrequencyStep.READ_SESSION_CODE,
+                );
+              }
+            }
+            }
+          />
+        );
+
+      case RegisterFrequencyStep.CHECK_GPS_PERMISSION:
         return (
           <GpsPermissionValidator
             onPermissionGranted={() =>
@@ -80,7 +111,7 @@ export const RegisterFrequencyFlux = () => {
 
       case RegisterFrequencyStep.GET_POSITION:
         return (
-          <GetLocation onGotLocation={(latitude, longitude) => setTimeout(() => validateUserLocation(latitude, longitude), 2000) } />
+          <GetLocation onGotLocation={(latitude, longitude) => setTimeout(() => validateUserLocation(latitude, longitude), 2000)} />
         );
 
       case RegisterFrequencyStep.CHECK_CAMERA_PERMISSION:
@@ -94,9 +125,9 @@ export const RegisterFrequencyFlux = () => {
         );
 
       case RegisterFrequencyStep.READ_QR_CODE:
-        return <QrCodeReader onReadQrCode={validateQrCode} />;
+        return <QrCodeReader onReadQrCode={validateCode} />;
 
-      case RegisterFrequencyStep.CHECKING_QR_CODE:
+      case RegisterFrequencyStep.CHECKING_CODE:
         return (
           <BlueContainerStyled>
             <Loader />
@@ -111,7 +142,12 @@ export const RegisterFrequencyFlux = () => {
       case RegisterFrequencyStep.GENERIC_ERROR:
       case RegisterFrequencyStep.GPS_ERROR:
         return (
-          <ErrorInfo errorType={registerFrequencyStep} onGoToHome={() => navigator.goBack()} onTryAgain={startRegisterFrequency} />
+          <ErrorInfo errorType={registerFrequencyStep} onGoToHome={() => navigator.goBack()} onTryAgain={() => startRegisterFrequency(attendanceInfos)} />
+        );
+
+      case RegisterFrequencyStep.READ_SESSION_CODE:
+        return (
+          <ReadStatusCodeView onReadCode={validateCode}  />
         );
 
       default:

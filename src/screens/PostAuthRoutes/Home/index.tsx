@@ -22,15 +22,20 @@ export const Home = () => {
     useNavigation<StackNavigationProp<PostAuthRoutesParamList>>();
 
   useEffect(() => {
-    Api.Classes.getMyClasses().then(res => {
-      res.sort((a, b) => {
-        if (a.isHappingNow === b.isHappingNow) {
-          return 0;
-        }
-        return a.isHappingNow ? -1 : 1;
+    Api.Classes.getMyClasses()
+      .then(res => {
+        res.sort((a, b) => {
+          if (a.isHappingNow === b.isHappingNow) {
+            return 0;
+          }
+          return a.isHappingNow ? -1 : 1;
+        });
+        setStudyClassList(res);
+      })
+      .catch(err => {
+        setStudyClassList([]);
+        console.log(err);
       });
-      setStudyClassList(res);
-    });
   }, []);
 
   if (!currentSession) {

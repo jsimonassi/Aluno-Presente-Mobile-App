@@ -7,6 +7,7 @@ import {ContainerStyled, TipInfo} from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {About} from './components/About';
 import {useRegisterFrequencyContext} from '../../../contexts/RegisterFrequency';
+import {AttendanceInProgressModel} from '../../../types/api/Attendance';
 
 export const AboutClass = () => {
   const navigator =
@@ -16,24 +17,26 @@ export const AboutClass = () => {
   const selectedStudyClass = route.params.selectedClass;
   const {startRegisterFrequency, checkAttendanceInProgress} =
     useRegisterFrequencyContext();
-  const [attendanceAvailable, setAttendanceAvailable] = useState<
-    boolean | null
-  >(null);
+  const [attendanceAvailable, setAttendanceAvailable] =
+    useState<AttendanceInProgressModel | null>(null);
 
   useEffect(() => {
     checkAttendanceInProgress(selectedStudyClass.id)
-      .then(attendanceInfos =>
-        setAttendanceAvailable(attendanceInfos.status === 'STARTED'),
-      )
-      .catch(() => setAttendanceAvailable(false));
+      .then(attendanceInfos => {
+        setAttendanceAvailable(attendanceInfos);
+      })
+      .catch(() => setAttendanceAvailable(null));
   }, []);
 
   const handleStartRegisterFrequency = () => {
-    startRegisterFrequency()
+    startRegisterFrequency(attendanceAvailable)
       .then(() => {
-        navigator.navigate('RegisterFrequencyFlux', {
-          selectedClass: selectedStudyClass,
-        });
+        if (attendanceAvailable) {
+          navigator.navigate('RegisterFrequencyFlux', {
+            selectedClass: selectedStudyClass,
+            attendanceInfos: attendanceAvailable,
+          });
+        }
       })
       .catch(err => {
         navigator.goBack();
@@ -45,7 +48,7 @@ export const AboutClass = () => {
     <ContainerStyled>
       <ClassNameBigHeader
         className={selectedStudyClass.name}
-        teacherName={selectedStudyClass.teacher}
+        teacherName={selectedStudyClass.teacher.name}
         attendanceAvailable={attendanceAvailable}
         onPressAttendance={handleStartRegisterFrequency}
         onPressBack={() => navigator.goBack()}

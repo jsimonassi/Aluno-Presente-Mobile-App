@@ -1,5 +1,6 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
 import {StudyClass} from '../class';
+import {AttendanceInProgressModel} from '../../api/Attendance';
 
 export type PostAuthRoutesParamList = {
   MainTab: NavigatorScreenParams<MainTabParamList>;
@@ -21,6 +22,7 @@ export type RegisterFrequencyStackParamList = {
   };
   RegisterFrequencyFlux: {
     selectedClass: StudyClass;
+    attendanceInfos: AttendanceInProgressModel;
   };
 };
 

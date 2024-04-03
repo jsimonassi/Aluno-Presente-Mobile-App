@@ -19,7 +19,7 @@ export const MainButton = ({
   type = 'primary',
   disabled = false,
   border = false,
-  loading = true,
+  loading = false,
 }: OwnProps) => {
   const theme = useTheme();
 
