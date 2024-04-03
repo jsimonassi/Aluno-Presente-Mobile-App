@@ -30,6 +30,7 @@
     "react-native": "0.73.3",
     "react-native-app-auth": "^7.1.0",
     "react-native-bouncy-checkbox": "^3.0.7",
+    "react-native-calendars": "^1.1304.1",
     "react-native-device-info": "^10.11.0",
     "react-native-gesture-handler": "^2.13.4",
     "react-native-haptic-feedback": "^2.2.0",

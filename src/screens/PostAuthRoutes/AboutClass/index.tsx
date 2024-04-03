@@ -2,7 +2,11 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {RegisterFrequencyStackParamList} from '../../../types/app/route';
-import {ClassNameBigHeader, MainFrequencyChart} from './components';
+import {
+  ClassNameBigHeader,
+  DetailedFrequency,
+  MainFrequencyChart,
+} from './components';
 import {ContainerStyled, TipInfo} from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {About} from './components/About';
@@ -72,6 +76,13 @@ export const AboutClass = () => {
       </TipInfo>
       <About aboutInfos={selectedStudyClass.about} />
       <MainFrequencyChart
+        userFrequency={
+          userFrequencyByClass && userFrequencyByClass[selectedStudyClass.id]
+            ? userFrequencyByClass[selectedStudyClass.id]
+            : null
+        }
+      />
+      <DetailedFrequency
         userFrequency={
           userFrequencyByClass && userFrequencyByClass[selectedStudyClass.id]
             ? userFrequencyByClass[selectedStudyClass.id]
