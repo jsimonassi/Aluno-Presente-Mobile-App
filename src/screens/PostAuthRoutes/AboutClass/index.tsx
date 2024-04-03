@@ -2,12 +2,17 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {RegisterFrequencyStackParamList} from '../../../types/app/route';
-import {ClassNameBigHeader} from './components';
+import {
+  ClassNameBigHeader,
+  DetailedFrequency,
+  MainFrequencyChart,
+} from './components';
 import {ContainerStyled, TipInfo} from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {About} from './components/About';
 import {useRegisterFrequencyContext} from '../../../contexts/RegisterFrequency';
 import {AttendanceInProgressModel} from '../../../types/api/Attendance';
+import {useUserFrequencyContext} from '../../../contexts/UserFrequency';
 
 export const AboutClass = () => {
   const navigator =
@@ -17,9 +22,12 @@ export const AboutClass = () => {
   const selectedStudyClass = route.params.selectedClass;
   const {startRegisterFrequency, checkAttendanceInProgress} =
     useRegisterFrequencyContext();
+  const {userFrequencyByClass, updateUserFrequencyByClass} =
+    useUserFrequencyContext();
   const [attendanceAvailable, setAttendanceAvailable] =
     useState<AttendanceInProgressModel | null>(null);
 
+  //Verifica se a chamada está em andamento
   useEffect(() => {
     checkAttendanceInProgress(selectedStudyClass.id)
       .then(attendanceInfos => {
@@ -27,6 +35,15 @@ export const AboutClass = () => {
       })
       .catch(() => setAttendanceAvailable(null));
   }, []);
+
+  //Recupera a frequência do usuário na turma
+  useEffect(() => {
+    updateUserFrequencyByClass(selectedStudyClass.id);
+  }, []);
+
+  useEffect(() => {
+    console.log('Alterou', userFrequencyByClass);
+  }, [userFrequencyByClass]);
 
   const handleStartRegisterFrequency = () => {
     startRegisterFrequency(attendanceAvailable)
@@ -58,6 +75,20 @@ export const AboutClass = () => {
         disponível.
       </TipInfo>
       <About aboutInfos={selectedStudyClass.about} />
+      <MainFrequencyChart
+        userFrequency={
+          userFrequencyByClass && userFrequencyByClass[selectedStudyClass.id]
+            ? userFrequencyByClass[selectedStudyClass.id]
+            : null
+        }
+      />
+      <DetailedFrequency
+        userFrequency={
+          userFrequencyByClass && userFrequencyByClass[selectedStudyClass.id]
+            ? userFrequencyByClass[selectedStudyClass.id]
+            : null
+        }
+      />
     </ContainerStyled>
   );
 };

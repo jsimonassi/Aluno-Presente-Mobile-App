@@ -2,6 +2,7 @@ import axios from 'axios';
 import {Session} from './session';
 import {Classes} from './classes';
 import {Attendances} from './attendances';
+import {Frequency} from './frequency';
 import {RESOURCE_SERVER_BASE_URL} from '@env';
 import {Storage} from '../storage';
 import {CACHE_SESSION_KEY} from '../../contexts/Session/useSessionData';
@@ -11,6 +12,7 @@ const resourceApi = axios.create({
   baseURL: RESOURCE_SERVER_BASE_URL + '/v1/api',
   headers: {'Content-Type': 'application/json', Accept: 'application/json'},
   timeoutErrorMessage: 'Tempo de resposta excedido',
+  timeout: 30000,
 });
 
 const setAuthToken = (token: string) => {
@@ -65,6 +67,7 @@ export const Api = {
   Session,
   Classes,
   Attendances,
+  Frequency,
   createAxiosResponseInterceptor,
   setAuthToken,
 };

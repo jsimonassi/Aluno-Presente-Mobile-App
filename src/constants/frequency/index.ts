@@ -1,0 +1,9 @@
+const FREQUENCY_STATUS = {
+  PRESENT: 1,
+  ABSENT: 2,
+  NOT_REGISTERED: 3,
+};
+
+export const FREQUENCY = {
+  FREQUENCY_STATUS,
+};

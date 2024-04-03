@@ -2,6 +2,7 @@ import React from 'react';
 import {SessionProvider} from './Session';
 import {PermissionProvider} from './Permission';
 import {RegisterFrequencyProvider} from './RegisterFrequency';
+import {UserFrequencyProvider} from './UserFrequency';
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -9,11 +10,13 @@ interface AppProviderProps {
 
 const AppProvider: React.FC<AppProviderProps> = ({children}) => {
   return (
-    <RegisterFrequencyProvider>
-      <PermissionProvider>
-        <SessionProvider>{children}</SessionProvider>
-      </PermissionProvider>
-    </RegisterFrequencyProvider>
+    <UserFrequencyProvider>
+      <RegisterFrequencyProvider>
+        <PermissionProvider>
+          <SessionProvider>{children}</SessionProvider>
+        </PermissionProvider>
+      </RegisterFrequencyProvider>
+    </UserFrequencyProvider>
   );
 };
 
