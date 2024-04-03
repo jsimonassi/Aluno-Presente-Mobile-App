@@ -4,7 +4,7 @@ import {Api} from '../../../services';
 
 export const useUserFrequencyData = () => {
   const [userFrequencyByClass, setUserFrequencyByClass] =
-    useState<UserFrequencyData>({});
+    useState<UserFrequencyData | null>(null);
 
   const updateUserFrequencyByClass = (courseId: string) => {
     Api.Frequency.getUserFrequency(courseId).then(data => {

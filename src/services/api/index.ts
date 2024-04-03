@@ -12,6 +12,7 @@ const resourceApi = axios.create({
   baseURL: RESOURCE_SERVER_BASE_URL + '/v1/api',
   headers: {'Content-Type': 'application/json', Accept: 'application/json'},
   timeoutErrorMessage: 'Tempo de resposta excedido',
+  timeout: 30000,
 });
 
 const setAuthToken = (token: string) => {
