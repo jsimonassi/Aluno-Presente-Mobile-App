@@ -17,12 +17,15 @@ import {useTheme} from 'styled-components/native';
 import {Helpers} from '../../../../../helpers';
 import {useRegisterFrequencyContext} from '../../../../../contexts/RegisterFrequency';
 
-interface QrCodeTipsProps {
+interface SessionCodeTipsProps {
   onBackPress: () => void;
   onStartPress: () => void;
 }
 
-export const QrCodeTips = ({onBackPress, onStartPress}: QrCodeTipsProps) => {
+export const SessionCodeTips = ({
+  onBackPress,
+  onStartPress,
+}: SessionCodeTipsProps) => {
   const currentTheme = useTheme();
   const {saveTipConfig} = useRegisterFrequencyContext();
 
@@ -32,14 +35,14 @@ export const QrCodeTips = ({onBackPress, onStartPress}: QrCodeTipsProps) => {
         <Pressable onPress={onBackPress}>
           <HeaderIconStyled showBackIcon source={assets.general.backIcon} />
         </Pressable>
-        <HeaderTextStyled>Faça a leitura do QrCode</HeaderTextStyled>
+        <HeaderTextStyled>Digite o código</HeaderTextStyled>
         <HeaderIconStyled source={assets.general.backIcon} />
       </HeaderContainerStyled>
       <BodyInfosContainerStyled>
-        <TipImageStyled source={assets.registerFrequency.qrCodeTip} />
+        <TipImageStyled source={assets.registerFrequency.sessionCodeTip} />
         <TipTextStyled>
-          Faça a leitura do QRCode disponibilizado pelo seu professor para
-          validar sua presença
+          Digite o código da chamada informado pelo professor para validar sua
+          presença
         </TipTextStyled>
         <BouncyCheckbox
           size={23}
@@ -53,7 +56,7 @@ export const QrCodeTips = ({onBackPress, onStartPress}: QrCodeTipsProps) => {
             textDecorationLine: 'none',
           }}
           onPress={(isChecked: boolean) => {
-            saveTipConfig(isChecked, 'QR');
+            saveTipConfig(isChecked, 'SESSION');
             Helpers.Feedbacks.triggerFeedback('impactLight');
           }}
         />

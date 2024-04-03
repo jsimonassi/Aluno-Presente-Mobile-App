@@ -6,10 +6,15 @@ export interface StudyClass {
   owner: string;
   period: string;
   isHappingNow?: boolean;
-  teacher: string;
+  teacher: StudyTeacher;
 }
 
 export interface DayOfWeekStudyClass {
   start: string;
   end: string;
+}
+
+interface StudyTeacher {
+  email: string;
+  name: string;
 }

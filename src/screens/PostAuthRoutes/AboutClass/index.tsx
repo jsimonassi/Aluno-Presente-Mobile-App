@@ -1,11 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {RegisterFrequencyStackParamList} from '../../../types/app/route';
 import {ClassNameBigHeader} from './components';
-import {ContainerStyled} from './styles';
+import {ContainerStyled, TipInfo} from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {About} from './components/About';
 import {useRegisterFrequencyContext} from '../../../contexts/RegisterFrequency';
+import {AttendanceInProgressModel} from '../../../types/api/Attendance';
 
 export const AboutClass = () => {
   const navigator =
@@ -13,14 +15,28 @@ export const AboutClass = () => {
   const route =
     useRoute<RouteProp<RegisterFrequencyStackParamList, 'AboutClass'>>();
   const selectedStudyClass = route.params.selectedClass;
-  const {startRegisterFrequency} = useRegisterFrequencyContext();
+  const {startRegisterFrequency, checkAttendanceInProgress} =
+    useRegisterFrequencyContext();
+  const [attendanceAvailable, setAttendanceAvailable] =
+    useState<AttendanceInProgressModel | null>(null);
 
-  //TODO: Verificar no backend se existe uma chamada em andamento.
+  useEffect(() => {
+    checkAttendanceInProgress(selectedStudyClass.id)
+      .then(attendanceInfos => {
+        setAttendanceAvailable(attendanceInfos);
+      })
+      .catch(() => setAttendanceAvailable(null));
+  }, []);
 
   const handleStartRegisterFrequency = () => {
-    startRegisterFrequency()
+    startRegisterFrequency(attendanceAvailable)
       .then(() => {
-        navigator.navigate('RegisterFrequencyFlux');
+        if (attendanceAvailable) {
+          navigator.navigate('RegisterFrequencyFlux', {
+            selectedClass: selectedStudyClass,
+            attendanceInfos: attendanceAvailable,
+          });
+        }
       })
       .catch(err => {
         navigator.goBack();
@@ -32,11 +48,15 @@ export const AboutClass = () => {
     <ContainerStyled>
       <ClassNameBigHeader
         className={selectedStudyClass.name}
-        teacherName={selectedStudyClass.teacher}
-        attendanceAvailable={true}
+        teacherName={selectedStudyClass.teacher.name}
+        attendanceAvailable={attendanceAvailable}
         onPressAttendance={handleStartRegisterFrequency}
         onPressBack={() => navigator.goBack()}
       />
+      <TipInfo>
+        Quando o professor iniciar a chamada, o registro de presença ficará
+        disponível.
+      </TipInfo>
       <About aboutInfos={selectedStudyClass.about} />
     </ContainerStyled>
   );

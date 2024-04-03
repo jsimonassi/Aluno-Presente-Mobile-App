@@ -1,12 +1,16 @@
 import React from 'react';
 import {ButtonTitle, PressableContainer} from './styles';
 import {Helpers} from '../../../helpers';
+import {ActivityIndicator} from 'react-native';
+import {useTheme} from 'styled-components/native';
 
 interface OwnProps {
   text: string;
   onPress: () => void;
   type?: 'primary' | 'secondary';
   disabled?: boolean;
+  border?: boolean;
+  loading?: boolean;
 }
 
 export const MainButton = ({
@@ -14,7 +18,11 @@ export const MainButton = ({
   onPress,
   type = 'primary',
   disabled = false,
+  border = false,
+  loading = false,
 }: OwnProps) => {
+  const theme = useTheme();
+
   return (
     <PressableContainer
       onPress={() => {
@@ -25,11 +33,25 @@ export const MainButton = ({
         Helpers.Feedbacks.triggerFeedback('impactLight');
         onPress();
       }}
+      border={border}
       styleType={type}
       style={({pressed}) => ({
         opacity: disabled ? 0.5 : pressed ? 0.9 : 1,
       })}>
-      <ButtonTitle styleType={type}>{text}</ButtonTitle>
+      <ButtonTitle styleType={type} border={border}>
+        {text}
+      </ButtonTitle>
+      {loading && (
+        <ActivityIndicator
+          size="small"
+          style={{marginLeft: 4}}
+          color={
+            type === 'secondary'
+              ? theme.palette.primaryColor
+              : theme.palette.fontIconBackgroundColor
+          }
+        />
+      )}
     </PressableContainer>
   );
 };

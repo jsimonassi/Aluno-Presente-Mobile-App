@@ -13,11 +13,12 @@ import {assets} from '../../../../../assets';
 import {MainButton} from '../../../../../components/Buttons';
 import {LetterProfileImage} from '../../../../../components/LetterProfileImage';
 import {Pressable} from 'react-native';
+import {AttendanceInProgressModel} from '../../../../../types/api/Attendance';
 
 interface ClassNameBigHeaderProps {
   className: string;
   teacherName: string;
-  attendanceAvailable: boolean;
+  attendanceAvailable: AttendanceInProgressModel | null;
   onPressBack: () => void;
   onPressAttendance: () => void;
 }
@@ -48,7 +49,11 @@ export const ClassNameBigHeader = ({
           onPress={onPressAttendance}
           text="Registrar presença"
           type="secondary"
-          disabled={!attendanceAvailable}
+          disabled={
+            attendanceAvailable === null ||
+            attendanceAvailable.status === 'NOT_STARTED'
+          }
+          loading={attendanceAvailable == null}
         />
       </FooterContainerStyled>
     </ContainerStyled>

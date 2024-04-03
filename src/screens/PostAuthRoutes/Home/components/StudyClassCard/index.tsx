@@ -73,7 +73,7 @@ export const StudyClassCard = ({
             {formatClassTime(currentStudyClass.daysOfWeek)}
           </SubtitleStyled>
           <TeacherNameStyled isHappingNow={isHappingNow}>
-            {currentStudyClass.teacher}
+            {currentStudyClass.teacher.name}
           </TeacherNameStyled>
         </View>
         {isHappingNow && (

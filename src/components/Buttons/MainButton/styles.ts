@@ -3,11 +3,13 @@ import styled from 'styled-components/native';
 
 interface ButtonProps {
   styleType: 'primary' | 'secondary';
+  border: boolean;
 }
 
 export const PressableContainer = styled(Pressable)<ButtonProps>`
   display: flex;
   align-items: center;
+  flex-direction: row;
   justify-content: center;
   background-color: ${({theme, styleType: type}) =>
     type === 'primary'
@@ -16,6 +18,8 @@ export const PressableContainer = styled(Pressable)<ButtonProps>`
   border-radius: 32px;
   height: 50px;
   width: 100%;
+  border: ${({theme, border}) =>
+    border ? `2px solid ${theme.palette.primaryColor}` : 'none'};
 `;
 
 export const ButtonTitle = styled.Text<ButtonProps>`
