@@ -7,7 +7,9 @@ export interface UserFrequency {
   frequency: Frequency[];
 }
 
-interface Frequency {
+export interface Frequency {
   date: string;
-  status: 'Presente' | 'Faltou' | 'Não inscrito';
+  status: FrequencyStatus;
 }
+
+export type FrequencyStatus = 'Presente' | 'Faltou' | 'Não inscrito';

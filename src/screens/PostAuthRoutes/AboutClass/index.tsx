@@ -41,10 +41,6 @@ export const AboutClass = () => {
     updateUserFrequencyByClass(selectedStudyClass.id);
   }, []);
 
-  useEffect(() => {
-    console.log('Alterou', userFrequencyByClass);
-  }, [userFrequencyByClass]);
-
   const handleStartRegisterFrequency = () => {
     startRegisterFrequency(attendanceAvailable)
       .then(() => {

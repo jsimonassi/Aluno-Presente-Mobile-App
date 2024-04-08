@@ -36,6 +36,15 @@ export const DescriptionContent = styled.Text`
   margin-bottom: 8px;
 `;
 
+export const TipInfo = styled.Text`
+  ${({theme}) => theme.typography.p};
+  font-family: 'Nunito-Light';
+  font-size: 12px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 16px;
+`;
+
 export const LegendItemContainer = styled.View`
   display: flex;
   flex-direction: row;

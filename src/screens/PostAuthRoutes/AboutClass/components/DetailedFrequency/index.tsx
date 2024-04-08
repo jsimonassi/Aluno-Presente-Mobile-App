@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useMemo} from 'react';
-import {UserFrequency} from '../../../../../types/app/frequency';
+import React, {useMemo, useState} from 'react';
+import {Frequency, UserFrequency} from '../../../../../types/app/frequency';
 import {
   CalendarContainer,
   ColorCircle,
@@ -10,12 +10,15 @@ import {
   LegendContainer,
   LegendItemContainer,
   LegendText,
+  TipInfo,
   Title,
 } from './styles';
 import moment from 'moment';
 import {DetailedFrequencyLoader} from '../WaitInfoLoaders/DetailedFrequencyLoader';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import {useTheme} from 'styled-components/native';
+import {AttendanceCard} from './components/AttendanceCard';
+import {MainButton} from '../../../../../components/Buttons';
 
 interface DetailedFrequencyProps {
   userFrequency: UserFrequency | null;
@@ -23,6 +26,7 @@ interface DetailedFrequencyProps {
 
 export const DetailedFrequency = ({userFrequency}: DetailedFrequencyProps) => {
   const currentTheme = useTheme();
+  const [selectedDate, setSelectedDate] = useState<Frequency[]>([]);
 
   LocaleConfig.locales['pt-br'] = {
     monthNames: [
@@ -73,19 +77,24 @@ export const DetailedFrequency = ({userFrequency}: DetailedFrequencyProps) => {
 
     userFrequency?.frequency.forEach(item => {
       const formattedDate = moment(item.date).format('YYYY-MM-DD');
-      if (item.status === 'Presente') {
+      if (!dates[formattedDate]) {
         dates[formattedDate] = {
           selected: true,
           selectedColor: currentTheme.palette.primaryColor,
         };
-      } else if (item.status === 'Faltou') {
-        dates[formattedDate] = {
-          selected: true,
-          selectedColor: currentTheme.palette.secondaryColor,
-        };
+      }
+
+      if (item.status === 'Faltou') {
+        dates[formattedDate].selectedColor =
+          currentTheme.palette.secondaryColor;
+      } else if (
+        item.status === 'Não inscrito' &&
+        dates[formattedDate].selectedColor !==
+          currentTheme.palette.secondaryColor
+      ) {
+        dates[formattedDate].selectedColor = currentTheme.palette.tertiaryColor;
       }
     });
-    console.log('dates', dates);
     return dates;
   }, [userFrequency]);
 
@@ -102,7 +111,7 @@ export const DetailedFrequency = ({userFrequency}: DetailedFrequencyProps) => {
       <Title>Frequência detalhada:</Title>
       <DateInfo>
         Última atualização:{' '}
-        {moment(userFrequency.updatedAt).format('DD/MM/YYYY-HH:mm')}
+        {moment(userFrequency.updatedAt).format('DD/MM/YYYY HH:mm')}
       </DateInfo>
       <CalendarContainer>
         <Calendar
@@ -128,9 +137,38 @@ export const DetailedFrequency = ({userFrequency}: DetailedFrequencyProps) => {
           pagingEnabled={true}
           current={'2024-04-03'}
           markedDates={markedDates}
+          onDayPress={day => {
+            setSelectedDate(
+              userFrequency.frequency.filter(
+                item =>
+                  moment(item.date).format('YYYY-MM-DD') === day.dateString,
+              ),
+            );
+          }}
         />
       </CalendarContainer>
       <LegendContainer>
+        <TipInfo>Selecione o dia para verificar todas as frequências</TipInfo>
+        {selectedDate.length > 0 && (
+          <>
+            {selectedDate.map((item, index) => (
+              <AttendanceCard
+                key={index}
+                date={item.date}
+                status={item.status}
+              />
+            ))}
+            <MainButton
+              type="secondary"
+              onPress={() => setSelectedDate([])}
+              text="Limpar seleção"
+              textStyles={{
+                textDecorationLine: 'underline',
+                textDecorationColor: currentTheme.palette.primaryColor,
+              }}
+            />
+          </>
+        )}
         <DescriptionContent>Legenda:</DescriptionContent>
         <LegendItemContainer>
           <ColorCircle color={currentTheme.palette.primaryColor} />
@@ -139,6 +177,10 @@ export const DetailedFrequency = ({userFrequency}: DetailedFrequencyProps) => {
         <LegendItemContainer>
           <ColorCircle color={currentTheme.palette.secondaryColor} />
           <LegendText>Falta</LegendText>
+        </LegendItemContainer>
+        <LegendItemContainer>
+          <ColorCircle color={currentTheme.palette.tertiaryColor} />
+          <LegendText>Não inscrito</LegendText>
         </LegendItemContainer>
       </LegendContainer>
     </Container>
