@@ -3,6 +3,7 @@ import {login} from './images/login';
 import {general} from './images/general';
 import {permission} from './images/permissions';
 import {registerFrequency} from './images/registerFrequency';
+import {contacts} from './images/contacts';
 
 export const assets = {
   home,
@@ -10,4 +11,5 @@ export const assets = {
   general,
   permission,
   registerFrequency,
+  contacts,
 };

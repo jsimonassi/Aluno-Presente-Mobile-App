@@ -20,8 +20,6 @@ interface MainFrequencyChartProps {
 export const MainFrequencyChart = ({
   userFrequency,
 }: MainFrequencyChartProps) => {
-  console.log('userFrequency', userFrequency);
-
   const {totalPresent, totalAbsents, presentPercentage} = useMemo(() => {
     let presentCount = 0;
     let absentCount = 0;
@@ -57,7 +55,7 @@ export const MainFrequencyChart = ({
       <Title>Minha frequência:</Title>
       <DateInfo>
         Última atualização:{' '}
-        {moment(userFrequency.updatedAt).format('DD/MM/YYYY-HH:mm')}
+        {moment(userFrequency.updatedAt).format('DD/MM/YYYY HH:mm')}
       </DateInfo>
       <ChartContainer>
         <ChartBg>

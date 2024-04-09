@@ -3,6 +3,7 @@ import {Session} from './session';
 import {Classes} from './classes';
 import {Attendances} from './attendances';
 import {Frequency} from './frequency';
+import {Teacher} from './teacher';
 import {RESOURCE_SERVER_BASE_URL} from '@env';
 import {Storage} from '../storage';
 import {CACHE_SESSION_KEY} from '../../contexts/Session/useSessionData';
@@ -68,6 +69,7 @@ export const Api = {
   Classes,
   Attendances,
   Frequency,
+  Teacher,
   createAxiosResponseInterceptor,
   setAuthToken,
 };

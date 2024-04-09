@@ -10,27 +10,7 @@ export const ContainerStyled = styled.View`
   justify-content: space-between;
 `;
 
-export const HeaderContainerStyled = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const HeaderTextStyled = styled.Text`
-  ${({theme}) => theme.typography.title};
-  color: ${({theme}) => theme.palette.fontIconBackgroundColor};
-  font-size: 22px;
-`;
-
-export const HeaderIconStyled = styled.Image<BackIconOptions>`
-  width: 32px;
-  height: 24px;
-  resize-mode: contain;
-  opacity: ${({showBackIcon}) => (showBackIcon ? 1 : 0)};
-`;
-
-export const BodyInfosContainerStyled = styled.View`
+export const BodyInfosContainerStyled = styled.TouchableOpacity`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,7 +38,3 @@ export const FooterContainerStyled = styled.View`
   padding-right: 10%;
   margin-top: 8px;
 `;
-
-interface BackIconOptions {
-  showBackIcon?: boolean;
-}

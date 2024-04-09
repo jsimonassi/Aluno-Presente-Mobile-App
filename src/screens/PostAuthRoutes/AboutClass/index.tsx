@@ -41,10 +41,6 @@ export const AboutClass = () => {
     updateUserFrequencyByClass(selectedStudyClass.id);
   }, []);
 
-  useEffect(() => {
-    console.log('Alterou', userFrequencyByClass);
-  }, [userFrequencyByClass]);
-
   const handleStartRegisterFrequency = () => {
     startRegisterFrequency(attendanceAvailable)
       .then(() => {
@@ -69,6 +65,11 @@ export const AboutClass = () => {
         attendanceAvailable={attendanceAvailable}
         onPressAttendance={handleStartRegisterFrequency}
         onPressBack={() => navigator.goBack()}
+        onPressTeacherProfile={() =>
+          navigator.navigate('TeacherProfile', {
+            teacherEmail: selectedStudyClass.teacher.email,
+          })
+        }
       />
       <TipInfo>
         Quando o professor iniciar a chamada, o registro de presença ficará

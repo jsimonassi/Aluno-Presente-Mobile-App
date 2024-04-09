@@ -9,6 +9,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
   ${({theme}) => theme.typography.subtitle};
+  color: ${({theme}) => theme.palette.primaryColor};
 `;
 
 export const DateInfo = styled.Text`
@@ -34,6 +35,15 @@ export const LegendContainer = styled.View`
 export const DescriptionContent = styled.Text`
   ${({theme}) => theme.typography.p};
   margin-bottom: 8px;
+`;
+
+export const TipInfo = styled.Text`
+  ${({theme}) => theme.typography.p};
+  font-family: 'Nunito-Light';
+  font-size: 12px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 16px;
 `;
 
 export const LegendItemContainer = styled.View`

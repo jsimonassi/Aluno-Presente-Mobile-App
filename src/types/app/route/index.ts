@@ -24,6 +24,9 @@ export type RegisterFrequencyStackParamList = {
     selectedClass: StudyClass;
     attendanceInfos: AttendanceInProgressModel;
   };
+  TeacherProfile: {
+    teacherEmail: string;
+  };
 };
 
 export type ProfileStackParamList = {
