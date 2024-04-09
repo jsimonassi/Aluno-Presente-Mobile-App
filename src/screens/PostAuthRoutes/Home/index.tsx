@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {RefreshControl, View} from 'react-native';
 import EmptyClassList from './components/EmptyClassList';
 import {useSessionContext} from '../../../contexts/Session';
 import {Api} from '../../../services';
@@ -15,6 +15,7 @@ import Header from '../../../components/Header';
 
 export const Home = () => {
   const {currentSession} = useSessionContext();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [studyClassList, setStudyClassList] = useState<StudyClass[] | null>(
     null,
   );
@@ -22,6 +23,11 @@ export const Home = () => {
     useNavigation<StackNavigationProp<PostAuthRoutesParamList>>();
 
   useEffect(() => {
+    getClassList();
+  }, []);
+
+  const getClassList = () => {
+    setStudyClassList(null);
     Api.Classes.getMyClasses()
       .then(res => {
         res.sort((a, b) => {
@@ -35,8 +41,11 @@ export const Home = () => {
       .catch(err => {
         setStudyClassList([]);
         console.log(err);
+      })
+      .finally(() => {
+        setIsRefreshing(false);
       });
-  }, []);
+  };
 
   if (!currentSession) {
     return null;
@@ -57,7 +66,23 @@ export const Home = () => {
 
     if (studyClassList.length > 0) {
       return (
-        <ScrollViewStyled>
+        <ScrollViewStyled
+          refreshControl={
+            <RefreshControl
+              style={{
+                flex: 1,
+                backgroundColor: 'pink',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              refreshing={isRefreshing}
+              onRefresh={() => {
+                setIsRefreshing(true);
+                getClassList();
+              }}
+              enabled={true}
+            />
+          }>
           <CustomCalendar />
           {studyClassList.map((studyClass, index) => (
             <StudyClassCard

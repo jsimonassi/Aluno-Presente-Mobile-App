@@ -9,6 +9,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
   ${({theme}) => theme.typography.subtitle};
+  color: ${({theme}) => theme.palette.primaryColor};
 `;
 
 export const DateInfo = styled.Text`

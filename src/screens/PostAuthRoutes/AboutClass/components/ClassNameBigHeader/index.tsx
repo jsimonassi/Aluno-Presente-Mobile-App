@@ -3,17 +3,13 @@ import {
   BodyInfosContainerStyled,
   ContainerStyled,
   FooterContainerStyled,
-  HeaderContainerStyled,
-  HeaderIconStyled,
-  HeaderTextStyled,
   TeacherNameStyled,
   TipTextStyled,
 } from './styles';
-import {assets} from '../../../../../assets';
 import {MainButton} from '../../../../../components/Buttons';
 import {LetterProfileImage} from '../../../../../components/LetterProfileImage';
-import {Pressable} from 'react-native';
 import {AttendanceInProgressModel} from '../../../../../types/api/Attendance';
+import {PageTitle} from '../../../../../components/PageTitle';
 
 interface ClassNameBigHeaderProps {
   className: string;
@@ -21,6 +17,7 @@ interface ClassNameBigHeaderProps {
   attendanceAvailable: AttendanceInProgressModel | null;
   onPressBack: () => void;
   onPressAttendance: () => void;
+  onPressTeacherProfile: () => void;
 }
 
 export const ClassNameBigHeader = ({
@@ -29,17 +26,12 @@ export const ClassNameBigHeader = ({
   attendanceAvailable,
   onPressBack,
   onPressAttendance,
+  onPressTeacherProfile,
 }: ClassNameBigHeaderProps) => {
   return (
     <ContainerStyled>
-      <HeaderContainerStyled>
-        <Pressable onPress={onPressBack}>
-          <HeaderIconStyled showBackIcon source={assets.general.backIcon} />
-        </Pressable>
-        <HeaderTextStyled>{className}</HeaderTextStyled>
-        <HeaderIconStyled source={assets.general.backIcon} />
-      </HeaderContainerStyled>
-      <BodyInfosContainerStyled>
+      <PageTitle title={className} onBackPress={onPressBack} showBackIcon />
+      <BodyInfosContainerStyled onPress={onPressTeacherProfile}>
         <LetterProfileImage name={teacherName.charAt(0).toLocaleUpperCase()} />
         <TeacherNameStyled>{teacherName}</TeacherNameStyled>
         <TipTextStyled>Toque para acessar o perfil do professor</TipTextStyled>

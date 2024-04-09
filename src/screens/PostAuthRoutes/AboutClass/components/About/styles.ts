@@ -8,6 +8,7 @@ export const Container = styled.View`
 
 export const AboutTitle = styled.Text`
   ${({theme}) => theme.typography.subtitle};
+  color: ${({theme}) => theme.palette.primaryColor};
 `;
 
 export const AboutContent = styled.Text`

@@ -65,6 +65,11 @@ export const AboutClass = () => {
         attendanceAvailable={attendanceAvailable}
         onPressAttendance={handleStartRegisterFrequency}
         onPressBack={() => navigator.goBack()}
+        onPressTeacherProfile={() =>
+          navigator.navigate('TeacherProfile', {
+            teacherEmail: selectedStudyClass.teacher.email,
+          })
+        }
       />
       <TipInfo>
         Quando o professor iniciar a chamada, o registro de presença ficará
