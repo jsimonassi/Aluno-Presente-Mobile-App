@@ -1,10 +1,15 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
+import HeaderPageTitle from '../../../components/HeaderPageTitle';
+import {NotificationEmptyInfo} from './styles';
 
 export const Notifications = () => {
   return (
     <View>
-      <Text>Notifications</Text>
+      <HeaderPageTitle pageTitle="Notificações" />
+      <NotificationEmptyInfo>
+        Nenhuma notificação encontrada.
+      </NotificationEmptyInfo>
     </View>
   );
 };

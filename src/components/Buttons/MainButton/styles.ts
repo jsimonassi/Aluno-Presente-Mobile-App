@@ -2,7 +2,7 @@ import {Pressable} from 'react-native';
 import styled from 'styled-components/native';
 
 interface ButtonProps {
-  styleType: 'primary' | 'secondary';
+  styleType: 'primary' | 'secondary' | 'danger';
   border: boolean;
 }
 
@@ -14,6 +14,8 @@ export const PressableContainer = styled(Pressable)<ButtonProps>`
   background-color: ${({theme, styleType: type}) =>
     type === 'primary'
       ? theme.palette.primaryColor
+      : type === 'danger'
+      ? theme.palette.secondaryColor
       : theme.palette.fontIconBackgroundColor};
   border-radius: 32px;
   height: 50px;
@@ -24,7 +26,7 @@ export const PressableContainer = styled(Pressable)<ButtonProps>`
 
 export const ButtonTitle = styled.Text<ButtonProps>`
   color: ${({theme, styleType}) =>
-    styleType === 'primary'
+    styleType === 'primary' || styleType === 'danger'
       ? theme.palette.fontIconBackgroundColor
       : theme.palette.primaryColor};
   font-weight: bold;
