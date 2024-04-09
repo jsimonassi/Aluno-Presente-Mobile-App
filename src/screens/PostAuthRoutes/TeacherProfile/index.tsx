@@ -18,6 +18,8 @@ import {RegisterFrequencyStackParamList} from '../../../types/app/route';
 import {TeacherInfo} from '../../../types/api/Teacher';
 import {LetterProfileImage} from '../../../components/LetterProfileImage';
 import {ContactCard} from './components/ContactCard';
+import {TeacherNameLoader} from './components/WaitInfoLoaders/TeacherNameLoader';
+import {InfoLoader} from './components/WaitInfoLoaders/InfoLoader';
 
 export const TeacherProfile = () => {
   const navigator =
@@ -34,13 +36,6 @@ export const TeacherProfile = () => {
       })
       .catch(() => navigator.goBack());
   }, []);
-  //TODO: Implementar a tela de perfil do professor
-
-  if (teacherInfo === null) {
-    return null;
-  }
-
-  console.log('OPA: ', JSON.stringify(teacherInfo));
 
   return (
     <PageContainer>
@@ -51,26 +46,44 @@ export const TeacherProfile = () => {
           showBackIcon
         />
         <InfoGroupContainer>
-          <LetterProfileImage
-            name={teacherInfo.name.charAt(0).toLocaleUpperCase()}
-          />
-          <TeacherNameStyled>{teacherInfo.name}</TeacherNameStyled>
+          {teacherInfo === null ? (
+            <>
+              <TeacherNameLoader />
+            </>
+          ) : (
+            <>
+              <LetterProfileImage
+                name={teacherInfo.name.charAt(0).toLocaleUpperCase()}
+              />
+              <TeacherNameStyled>{teacherInfo.name}</TeacherNameStyled>
+            </>
+          )}
         </InfoGroupContainer>
       </ContainerStyled>
-      <AboutContainer>
-        <AboutTitle>Sobre:</AboutTitle>
-        <AboutContent>
-          {teacherInfo.info.about !== ''
-            ? teacherInfo.info.about
-            : 'Nenhuma informação adicionada pelo professor.'}
-        </AboutContent>
-      </AboutContainer>
-      <ContactsContainer>
-        <AboutTitle>Contatos:</AboutTitle>
-        {teacherInfo.info.contacts.map((item, index) => {
-          return <ContactCard key={index} contact={item} />;
-        })}
-      </ContactsContainer>
+      {teacherInfo === null ? (
+        <>
+          <InfoLoader />
+          <InfoLoader />
+          <InfoLoader />
+        </>
+      ) : (
+        <>
+          <AboutContainer>
+            <AboutTitle>Sobre:</AboutTitle>
+            <AboutContent>
+              {teacherInfo.info.about !== ''
+                ? teacherInfo.info.about
+                : 'Nenhuma informação adicionada pelo professor.'}
+            </AboutContent>
+          </AboutContainer>
+          <ContactsContainer>
+            <AboutTitle>Contatos:</AboutTitle>
+            {teacherInfo.info.contacts.map((item, index) => {
+              return <ContactCard key={index} contact={item} />;
+            })}
+          </ContactsContainer>
+        </>
+      )}
     </PageContainer>
   );
 };

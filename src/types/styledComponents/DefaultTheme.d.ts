@@ -25,6 +25,9 @@ declare module 'styled-components/native' {
       gradientBgStart: string;
       gradientBgEnd: string;
 
+      loaderPrimary: string;
+      loaderSecondary: string;
+
       modalBackdrop: string;
     };
     typography: {

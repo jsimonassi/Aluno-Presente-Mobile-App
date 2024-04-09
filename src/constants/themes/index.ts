@@ -19,6 +19,9 @@ export const LightTheme: DefaultTheme = {
     gradientBgStart: '#385775',
     gradientBgEnd: '#19222B',
 
+    loaderPrimary: '#385775',
+    loaderSecondary: '#2F4149',
+
     modalBackdrop: '#0000007D',
   },
   typography: {

@@ -7,10 +7,14 @@ export const useUserFrequencyData = () => {
     useState<UserFrequencyData | null>(null);
 
   const updateUserFrequencyByClass = (courseId: string) => {
+    const tempData = userFrequencyByClass || {};
     Api.Frequency.getUserFrequency(courseId).then(data => {
-      const currentData = userFrequencyByClass || {};
-      currentData[courseId] = data;
-      setUserFrequencyByClass(currentData);
+      tempData[courseId] = data;
+      setUserFrequencyByClass(null);
+      //Força a atualização para gerar render
+      setTimeout(() => {
+        setUserFrequencyByClass(tempData);
+      }, 1000);
     });
   };
   return {
