@@ -4,10 +4,17 @@ import {Classes} from './classes';
 import {Attendances} from './attendances';
 import {Frequency} from './frequency';
 import {Teacher} from './teacher';
-import {RESOURCE_SERVER_BASE_URL} from '@env';
+import {AUTH_SERVER_BASE_URL, RESOURCE_SERVER_BASE_URL} from '@env';
 import {Storage} from '../storage';
 import {CACHE_SESSION_KEY} from '../../contexts/Session/useSessionData';
 import {TokenSession} from '../../types/api/Session';
+
+const authApi = axios.create({
+  baseURL: AUTH_SERVER_BASE_URL + '/v1/auth',
+  headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+  timeoutErrorMessage: 'Tempo de resposta excedido',
+  timeout: 30000,
+});
 
 const resourceApi = axios.create({
   baseURL: RESOURCE_SERVER_BASE_URL + '/v1/api',
@@ -65,6 +72,7 @@ const createAxiosResponseInterceptor = (logoutFunction: () => void) => {
 
 export const Api = {
   resourceApi,
+  authApi,
   Session,
   Classes,
   Attendances,

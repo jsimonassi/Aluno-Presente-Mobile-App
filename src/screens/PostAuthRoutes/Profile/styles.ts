@@ -19,3 +19,15 @@ export const SelectorContainer = styled.View`
   width: 90%;
   margin-bottom: 30px;
 `;
+
+export const LoaderContainer = styled.View`
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: ${({theme}) => theme.palette.pageBackgroundColor};
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;

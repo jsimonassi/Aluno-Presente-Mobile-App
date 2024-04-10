@@ -56,4 +56,17 @@ export const Session = {
         });
     });
   },
+
+  invalidateToken: (idToken: string) => {
+    return new Promise<void>((resolve, reject) => {
+      Api.authApi
+        .post(`/connect/logout?id_token_hint=${idToken}`)
+        .then(() => {
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
 };

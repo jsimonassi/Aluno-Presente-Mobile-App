@@ -1,35 +1,45 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
 import Header from '../../../components/Header';
 import {MainButton} from '../../../components/Buttons';
-import {ButtonsGroup, ContentContainer, SelectorContainer} from './styles';
+import {
+  ButtonsGroup,
+  ContentContainer,
+  LoaderContainer,
+  SelectorContainer,
+} from './styles';
 import {ListSelector} from '../../../components/ListSelector';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {PostAuthRoutesParamList} from '../../../types/app/route';
+import {PRIVACY_POLICY_PAGE_URL, CONSENT_PAGE_URL, TERMS_PAGE_URL} from '@env';
+import {useSessionContext} from '../../../contexts/Session';
+import {Loader} from '../../../components/Loader';
 
 const AVAILABLE_OPTIONS = [
   {
     label: 'Termos de uso',
-    action: 'https://www.google.com',
+    action: TERMS_PAGE_URL,
   },
   {
     label: 'Política de privacidade',
-    action: 'https://www.google.com',
+    action: PRIVACY_POLICY_PAGE_URL,
   },
   {
     label: 'Consentimento de uso',
-    action: 'https://www.google.com',
+    action: CONSENT_PAGE_URL,
   },
   {
     label: 'Sobre',
-    action: 'https://www.google.com',
+    action: '',
   },
 ];
 
 export const Profile = () => {
   const navigator =
     useNavigation<StackNavigationProp<PostAuthRoutesParamList>>();
+  const {logout} = useSessionContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOptionSelect = (index: number) => {
     const selectedOption = AVAILABLE_OPTIONS[index];
@@ -45,8 +55,19 @@ export const Profile = () => {
     }
   };
 
+  const handleLogout = async () => {
+    setIsLoading(true);
+    await logout();
+    setIsLoading(false);
+  };
+
   return (
     <View>
+      {isLoading && (
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      )}
       <Header welcomeStyle={false} />
       <ContentContainer>
         <SelectorContainer>
@@ -57,7 +78,7 @@ export const Profile = () => {
         </SelectorContainer>
         <ButtonsGroup>
           <MainButton text="Excluir conta" onPress={() => null} type="danger" />
-          <MainButton text="Sair" onPress={() => null} />
+          <MainButton text="Sair" onPress={handleLogout} />
         </ButtonsGroup>
       </ContentContainer>
     </View>
