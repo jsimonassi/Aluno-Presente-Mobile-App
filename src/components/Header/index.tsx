@@ -15,31 +15,26 @@ interface HeaderProps {
 
 const Header = ({welcomeStyle = true}: HeaderProps) => {
   const {currentSession} = useSessionContext();
-  const navigator =
-    useNavigation<StackNavigationProp<PostAuthRoutesParamList>>();
 
   return (
-    <Pressable
-      onPress={() => navigator.navigate('ProfileStack', {screen: 'Profile'})}>
-      <HeaderContainerStyled>
-        <LetterProfileImage name={currentSession?.currentUser.name ?? '-'} />
-        <InfoGroupStyled>
-          {welcomeStyle ? (
-            <SecondaryText style={{fontSize: 20, fontWeight: 'bold'}}>
-              Olá, {currentSession?.currentUser.name.split(' ')[0]}
-            </SecondaryText>
-          ) : (
-            <SecondaryText style={{fontSize: 20, fontWeight: 'bold'}}>
-              {Helpers.String.truncateString(
-                currentSession?.currentUser.name ?? '',
-                20,
-              )}
-            </SecondaryText>
-          )}
-          <SecondaryText>Universidade Federal Fluminense</SecondaryText>
-        </InfoGroupStyled>
-      </HeaderContainerStyled>
-    </Pressable>
+    <HeaderContainerStyled>
+      <LetterProfileImage name={currentSession?.currentUser.name ?? '-'} />
+      <InfoGroupStyled>
+        {welcomeStyle ? (
+          <SecondaryText style={{fontSize: 20, fontWeight: 'bold'}}>
+            Olá, {currentSession?.currentUser.name.split(' ')[0]}
+          </SecondaryText>
+        ) : (
+          <SecondaryText style={{fontSize: 20, fontWeight: 'bold'}}>
+            {Helpers.String.truncateString(
+              currentSession?.currentUser.name ?? '',
+              20,
+            )}
+          </SecondaryText>
+        )}
+        <SecondaryText>Universidade Federal Fluminense</SecondaryText>
+      </InfoGroupStyled>
+    </HeaderContainerStyled>
   );
 };
 
