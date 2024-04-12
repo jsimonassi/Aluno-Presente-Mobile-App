@@ -3,6 +3,7 @@ import {RouterContainer} from './routes';
 import {ThemeProvider} from 'styled-components/native';
 import {Constants} from './constants';
 import 'react-native-gesture-handler';
+// import 'react-native-reanimated';
 import AppProvider from './contexts';
 
 const App = () => {

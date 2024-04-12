@@ -2,7 +2,11 @@ export {Home} from './PostAuthRoutes/Home';
 export {NewClass} from './PostAuthRoutes/NewClass';
 export {Notifications} from './PostAuthRoutes/Notifications';
 export {Profile} from './PostAuthRoutes/Profile';
-export {Login, LoginWebView} from './PreAuthRoutes';
+export {Login} from './PreAuthRoutes';
 export {SplashLoader} from './LoaderRoutes';
-
-//TODO: Refactor exportation of screens
+export {AboutClass} from './PostAuthRoutes/AboutClass';
+export {RegisterFrequencyFlux} from './PostAuthRoutes/RegisterFrequencyFlux';
+export {TeacherProfile} from './PostAuthRoutes/TeacherProfile';
+export {GenericWebview} from './PostAuthRoutes/GenericWebview';
+export {Logout} from './PostAuthRoutes/Logout';
+export {AboutDevs} from './PostAuthRoutes/AboutDevs';

@@ -1,30 +1,59 @@
 import React from 'react';
 import {ButtonTitle, PressableContainer} from './styles';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-
-const options = {
-  enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false,
-};
+import {Helpers} from '../../../helpers';
+import {ActivityIndicator, TextStyle} from 'react-native';
+import {useTheme} from 'styled-components/native';
 
 interface OwnProps {
   text: string;
   onPress: () => void;
-  type?: 'primary' | 'secondary';
+  type?: 'primary' | 'secondary' | 'danger';
+  disabled?: boolean;
+  border?: boolean;
+  loading?: boolean;
+  textStyles?: TextStyle;
 }
 
-export const MainButton = ({text, onPress, type = 'primary'}: OwnProps) => {
+export const MainButton = ({
+  text,
+  onPress,
+  type = 'primary',
+  disabled = false,
+  border = false,
+  loading = false,
+  textStyles,
+}: OwnProps) => {
+  const theme = useTheme();
+
   return (
     <PressableContainer
       onPress={() => {
-        ReactNativeHapticFeedback.trigger('impactLight', options);
+        if (disabled) {
+          Helpers.Feedbacks.triggerFeedback('impactHeavy');
+          return;
+        }
+        Helpers.Feedbacks.triggerFeedback('impactLight');
         onPress();
       }}
+      border={border}
       styleType={type}
       style={({pressed}) => ({
-        opacity: pressed ? 0.9 : 1,
+        opacity: disabled ? 0.5 : pressed ? 0.9 : 1,
       })}>
-      <ButtonTitle styleType={type}>{text}</ButtonTitle>
+      <ButtonTitle style={{...textStyles}} styleType={type} border={border}>
+        {text}
+      </ButtonTitle>
+      {loading && (
+        <ActivityIndicator
+          size="small"
+          style={{marginLeft: 4}}
+          color={
+            type === 'secondary'
+              ? theme.palette.primaryColor
+              : theme.palette.fontIconBackgroundColor
+          }
+        />
+      )}
     </PressableContainer>
   );
 };
