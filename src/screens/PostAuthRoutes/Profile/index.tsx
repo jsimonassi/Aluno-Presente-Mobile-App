@@ -51,6 +51,7 @@ export const Profile = () => {
       });
       return;
     }
+    navigator.navigate('ProfileStack', {screen: 'AboutDevs'});
   };
 
   const handleLogout = async () => {
