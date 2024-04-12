@@ -1,14 +1,19 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {Profile} from '../../../screens';
+import {GenericWebview, Logout, Profile} from '../../../screens';
 import {ProfileStackParamList} from '../../../types/app/route';
 
 const {Navigator, Screen} = createStackNavigator<ProfileStackParamList>();
 
 export const ProfileStack = () => {
   return (
-    <Navigator>
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Screen name="Profile" component={Profile} />
+      <Screen name="GenericWebView" component={GenericWebview} />
+      <Screen name="Logout" component={Logout} />
     </Navigator>
   );
 };

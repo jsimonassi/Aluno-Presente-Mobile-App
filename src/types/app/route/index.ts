@@ -31,6 +31,11 @@ export type RegisterFrequencyStackParamList = {
 
 export type ProfileStackParamList = {
   Profile: undefined;
+  GenericWebView: {
+    url: string;
+    title: string;
+  };
+  Logout: undefined;
 };
 
 export type PermissionsStackParamList = {

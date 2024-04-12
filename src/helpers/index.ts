@@ -3,6 +3,7 @@ import {HexGenerator} from './hexGenerator';
 import {DateHelper} from './dateHelper';
 import {Feedbacks} from './feedbacks';
 import {Geolocation} from './geolocation';
+import {String} from './string';
 
 export const Helpers = {
   CodeGenerator,
@@ -10,4 +11,5 @@ export const Helpers = {
   DateHelper,
   Feedbacks,
   Geolocation,
+  String,
 };

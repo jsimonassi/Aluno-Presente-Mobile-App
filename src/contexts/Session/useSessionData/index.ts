@@ -85,9 +85,16 @@ export const useSessionData = () => {
     Storage.storeData(CACHE_SESSION_KEY, session);
   };
 
-  const logout = () => {
-    setSession(null);
-    Storage.clearItem(CACHE_SESSION_KEY);
+  const logout = async () => {
+    try {
+      Api.setAuthToken('');
+      setSession(null);
+      await Storage.clearItem(CACHE_SESSION_KEY);
+      return Promise.resolve();
+    } catch (error) {
+      console.log('Error on logout: ', error);
+      return Promise.reject();
+    }
   };
 
   return {
