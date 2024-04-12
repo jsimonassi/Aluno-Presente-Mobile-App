@@ -35,6 +35,7 @@ export type ProfileStackParamList = {
     url: string;
     title: string;
   };
+  Logout: undefined;
 };
 
 export type PermissionsStackParamList = {

@@ -8,3 +8,4 @@ export {AboutClass} from './PostAuthRoutes/AboutClass';
 export {RegisterFrequencyFlux} from './PostAuthRoutes/RegisterFrequencyFlux';
 export {TeacherProfile} from './PostAuthRoutes/TeacherProfile';
 export {GenericWebview} from './PostAuthRoutes/GenericWebview';
+export {Logout} from './PostAuthRoutes/Logout';

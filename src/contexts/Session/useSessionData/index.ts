@@ -87,15 +87,13 @@ export const useSessionData = () => {
 
   const logout = async () => {
     try {
-      await Api.Session.invalidateToken(currentSession?.idToken ?? '');
+      Api.setAuthToken('');
+      setSession(null);
+      await Storage.clearItem(CACHE_SESSION_KEY);
+      return Promise.resolve();
     } catch (error) {
       console.log('Error on logout: ', error);
       return Promise.reject();
-    } finally {
-      Api.setAuthToken('');
-      setSession(null);
-      Storage.clearItem(CACHE_SESSION_KEY);
-      return Promise.resolve();
     }
   };
 

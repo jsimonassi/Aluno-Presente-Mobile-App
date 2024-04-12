@@ -13,7 +13,6 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {PostAuthRoutesParamList} from '../../../types/app/route';
 import {PRIVACY_POLICY_PAGE_URL, CONSENT_PAGE_URL, TERMS_PAGE_URL} from '@env';
-import {useSessionContext} from '../../../contexts/Session';
 import {Loader} from '../../../components/Loader';
 
 const AVAILABLE_OPTIONS = [
@@ -38,7 +37,6 @@ const AVAILABLE_OPTIONS = [
 export const Profile = () => {
   const navigator =
     useNavigation<StackNavigationProp<PostAuthRoutesParamList>>();
-  const {logout} = useSessionContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOptionSelect = (index: number) => {
@@ -57,8 +55,7 @@ export const Profile = () => {
 
   const handleLogout = async () => {
     setIsLoading(true);
-    await logout();
-    setIsLoading(false);
+    navigator.navigate('ProfileStack', {screen: 'Logout'});
   };
 
   return (
