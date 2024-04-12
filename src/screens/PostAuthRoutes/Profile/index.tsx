@@ -77,8 +77,8 @@ export const Profile = () => {
           />
         </SelectorContainer>
         <ButtonsGroup>
-          <MainButton text="Excluir conta" onPress={() => null} type="danger" />
-          <MainButton text="Sair" onPress={handleLogout} />
+          {/* <MainButton text="Excluir conta" onPress={() => null} type="danger" /> */}
+          <MainButton text="Sair" onPress={handleLogout} type="danger" />
         </ButtonsGroup>
       </ContentContainer>
     </View>

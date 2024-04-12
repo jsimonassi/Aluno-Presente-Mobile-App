@@ -7,7 +7,7 @@ import {useTheme} from 'styled-components/native';
 interface OwnProps {
   text: string;
   onPress: () => void;
-  type?: 'primary' | 'secondary';
+  type?: 'primary' | 'secondary' | 'danger';
   disabled?: boolean;
   border?: boolean;
   loading?: boolean;
