@@ -13,7 +13,7 @@ import {
   SuccessInfo,
 } from './components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RegisterFrequencyStackParamList } from '../../../types/app/route';
+import { MainTabParamList, RegisterFrequencyStackParamList } from '../../../types/app/route';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Loader } from '../../../components/Loader';
 import { BlueContainerStyled } from './styles';
@@ -23,7 +23,7 @@ import { SessionCodeTips } from './components/SessionCodeTips';
 
 export const RegisterFrequencyFlux = () => {
   const { registerFrequencyStep, setRegisterFrequencyStep, startRegisterFrequency, registerUserFrequency } = useRegisterFrequencyContext();
-  const navigator = useNavigation<StackNavigationProp<RegisterFrequencyStackParamList>>();
+  const navigator = useNavigation<StackNavigationProp<MainTabParamList>>();
   const route = useRoute<RouteProp<RegisterFrequencyStackParamList, 'RegisterFrequencyFlux'>>();
   const classInfo = route.params.selectedClass;
   const attendanceInfos = route.params.attendanceInfos;
@@ -68,7 +68,7 @@ export const RegisterFrequencyFlux = () => {
       case RegisterFrequencyStep.SHOW_QR_CODE_TIPS:
         return (
           <QrCodeTips
-            onBackPress={() => navigator.goBack()}
+            onBackPress={() => navigator.navigate('Home')}
             onStartPress={() => {
               if (attendanceInfos.location && attendanceInfos.location.latitude && attendanceInfos.location.longitude) {
                 setRegisterFrequencyStep(RegisterFrequencyStep.CHECK_GPS_PERMISSION);
@@ -85,7 +85,7 @@ export const RegisterFrequencyFlux = () => {
       case RegisterFrequencyStep.SHOW_SESSION_CODE_TIPS:
         return (
           <SessionCodeTips
-            onBackPress={() => navigator.goBack()}
+            onBackPress={() => navigator.navigate('Home')}
             onStartPress={() => {
               if (attendanceInfos.location && attendanceInfos.location.latitude && attendanceInfos.location.longitude) {
                 setRegisterFrequencyStep(RegisterFrequencyStep.CHECK_GPS_PERMISSION);
@@ -105,7 +105,7 @@ export const RegisterFrequencyFlux = () => {
             onPermissionGranted={() =>
               setRegisterFrequencyStep(RegisterFrequencyStep.GET_POSITION)
             }
-            onUserGaveUp={() => navigator.goBack()}
+            onUserGaveUp={() => navigator.navigate('Home')}
           />
         );
 
@@ -120,7 +120,7 @@ export const RegisterFrequencyFlux = () => {
             onPermissionGranted={() =>
               setRegisterFrequencyStep(RegisterFrequencyStep.READ_QR_CODE)
             }
-            onUserGaveUp={() => navigator.goBack()}
+            onUserGaveUp={() => navigator.navigate('Home')}
           />
         );
 
@@ -136,13 +136,13 @@ export const RegisterFrequencyFlux = () => {
 
       case RegisterFrequencyStep.SUCCESS:
         return (
-          <SuccessInfo onGoToHome={() => navigator.goBack()} />
+          <SuccessInfo onGoToHome={() => navigator.navigate('Home')} />
         );
 
       case RegisterFrequencyStep.GENERIC_ERROR:
       case RegisterFrequencyStep.GPS_ERROR:
         return (
-          <ErrorInfo errorType={registerFrequencyStep} onGoToHome={() => navigator.goBack()} onTryAgain={() => startRegisterFrequency(attendanceInfos)} />
+          <ErrorInfo errorType={registerFrequencyStep} onGoToHome={() => navigator.navigate('Home')} onTryAgain={() => startRegisterFrequency(attendanceInfos)} />
         );
 
       case RegisterFrequencyStep.READ_SESSION_CODE:
