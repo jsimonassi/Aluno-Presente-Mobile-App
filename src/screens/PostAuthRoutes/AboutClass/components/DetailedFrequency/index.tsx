@@ -135,7 +135,7 @@ export const DetailedFrequency = ({userFrequency}: DetailedFrequencyProps) => {
           }}
           horizontal={true}
           pagingEnabled={true}
-          current={'2024-04-03'}
+          current={moment().format('YYYY-MM-DD')}
           markedDates={markedDates}
           onDayPress={day => {
             setSelectedDate(
