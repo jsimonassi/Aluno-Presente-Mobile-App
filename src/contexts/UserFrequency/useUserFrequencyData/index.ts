@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {UserFrequencyData} from '../../../types/app/frequency';
 import {Api} from '../../../services';
+import isEqual from 'lodash/isEqual';
 
 export const useUserFrequencyData = () => {
   const [userFrequencyByClass, setUserFrequencyByClass] =
@@ -8,13 +9,14 @@ export const useUserFrequencyData = () => {
 
   const updateUserFrequencyByClass = (courseId: string) => {
     const tempData = userFrequencyByClass || {};
+
     Api.Frequency.getUserFrequency(courseId).then(data => {
-      tempData[courseId] = data;
-      setUserFrequencyByClass(null);
-      //Força a atualização para gerar render
-      setTimeout(() => {
-        setUserFrequencyByClass(tempData);
-      }, 1000);
+      const newTempData = {...tempData, [courseId]: data};
+
+      if (!isEqual(tempData, newTempData)) {
+        // Verifica se há diferenças profundas
+        setUserFrequencyByClass(newTempData);
+      }
     });
   };
   return {
