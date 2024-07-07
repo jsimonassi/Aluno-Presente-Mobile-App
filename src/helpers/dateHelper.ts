@@ -6,6 +6,11 @@ const addIsNowInfoToClassList = (classList: StudyClass[]) => {
   return classList.map((studyClass: StudyClass) => {
     let isNow = false;
     studyClass.daysOfWeek.forEach(day => {
+      if (now.isoWeekday() !== moment(day.start).isoWeekday()) {
+        isNow = false;
+        return;
+      }
+
       let start = moment(day.start).set({
         year: now.year(),
         month: now.month(),
